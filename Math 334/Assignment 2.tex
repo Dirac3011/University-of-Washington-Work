@@ -1,0 +1,249 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 334 Homework \#2}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item 
+Let 
+\[
+f(x,y) = 
+\begin{cases}
+\dfrac{\sin(xy)}{x}, & x \ne 0,\\[6pt]
+f(0,y), & x = 0.
+\end{cases}
+\]
+We wish to define \( f(0,y) \) so that \( f \) is continuous on all of \( \mathbb{R}^2 \).
+
+To make \( f \) continuous at \( x = 0 \), we examine the limit
+\[
+\lim_{x \to 0} f(x,y) = \lim_{x \to 0} \frac{\sin(xy)}{x}.
+\]
+Let \( t = xy \). Then as \( x \to 0 \), we have \( t \to 0 \), and
+\[
+\frac{\sin(xy)}{x} = y \cdot \frac{\sin t}{t}.
+\]
+Since \( \displaystyle \lim_{t \to 0} \frac{\sin t}{t} = 1 \), it follows that
+\[
+\lim_{x \to 0} \frac{\sin(xy)}{x} = y.
+\]
+Thus, the natural way to define \( f(0,y) \) is
+\[
+f(0,y) = y.
+\]
+This ensures that \( f \) matches its limit value as \( x \to 0 \), making it continuous.
+
+Hence, the complete definition is
+\[
+f(x,y) = 
+\begin{cases}
+\dfrac{\sin(xy)}{x}, & x \ne 0,\\[6pt]
+y, & x = 0.
+\end{cases}
+\]
+
+Now we verify continuity at points \((0, y_0)\). For \(x \ne 0\),
+\[
+f(x,y) - y_0
+= y\Big(\frac{\sin(xy)}{xy}-1\Big) + (y - y_0).
+\]
+Given \(\varepsilon > 0\), since \(\frac{\sin t}{t} \to 1\) as \(t \to 0\), there exists \(\eta > 0\) such that
+\[
+\bigg|\frac{\sin t}{t} - 1\bigg| < \frac{\varepsilon}{2(|y_0| + 1)} \quad \text{whenever } |t| < \eta.
+\]
+Choose \(\delta > 0\) so that
+\[
+|x| < \delta, \quad |y - y_0| < \delta \implies |xy| < \eta \text{ and } |y - y_0| < \frac{\varepsilon}{2}.
+\]
+Then for such \((x,y)\),
+\[
+|f(x,y) - y_0|
+\le |y|\cdot\bigg|\frac{\sin(xy)}{xy} - 1\bigg| + |y - y_0|
+< (|y_0|+1)\frac{\varepsilon}{2(|y_0|+1)} + \frac{\varepsilon}{2}
+= \varepsilon.
+\]
+Hence \(\lim_{(x,y) \to (0, y_0)} f(x,y) = y_0 = f(0, y_0)\), proving \(f\) is continuous everywhere on \(\mathbb{R}^2\).
+
+\item 
+
+ (\(\Rightarrow\)) Suppose \(a\) is an accumulation point of \(S\). Then every neighborhood of \(a\) contains a point of \(S\) different from \(a\). For each \(k\in\mathbb{N}\) consider the open ball \(B(a,\tfrac{1}{k})\). By the accumulation-point property there exists \(x_k\in S\cap\big(B(a,\tfrac{1}{k})\setminus\{a\}\big)\). Thus \(x_k\neq a\) and \(|x_k-a|<\tfrac{1}{k}\). Hence \(|x_k-a|\to0\) as \(k\to\infty\), so \(x_k\to a\). This gives the required sequence.
+
+(\(\Leftarrow\)) Conversely, suppose there exists a sequence \(\{x_k\}\subset S\) with \(x_k\neq a\) for all \(k\) and \(x_k\to a\). Let \(U\) be any neighborhood of \(a\). Since \(x_k\to a\), there is \(K\) such that for all \(k\ge K\) we have \(x_k\in U\). For such \(k\) we also have \(x_k\neq a\), so \(U\) contains a point of \(S\) different from \(a\). Since \(U\) was arbitrary, every neighborhood of \(a\) meets \(S\setminus\{a\}\), so \(a\) is an accumulation point of \(S\). \(\qed\)
+
+
+\item \(x\in\overline{S}\) iff every neighborhood of \(x\) meets \(S\).
+
+(1) \(S\cup S'\subset \overline{S}\). If \(x\in S\) then trivially every neighborhood of \(x\) meets \(S\), so \(x\in\overline{S}\). If \(x\in S'\) is an accumulation point, then by definition every neighborhood of \(x\) meets \(S\) (in fact meets \(S\setminus\{x\}\)), hence \(x\in\overline{S}\). Thus \(S\cup S'\subset\overline{S}\).
+
+(2) \(\overline{S}\subset S\cup S'\). Let \(x\in\overline{S}\). If \(x\in S\) we are pretty much done. If \(x\notin S\), then every neighborhood of \(x\) meets \(S\). Because \(x\notin S\), these intersections are necessarily with points of \(S\) different from \(x\); hence every neighborhood of \(x\) meets \(S\setminus\{x\}\), so \(x\) is an accumulation point of \(S\). Therefore \(x\in S'\). This shows \(\overline{S}\subset S\cup S'\).
+
+Combining (1) and (2) shws us that \(\overline{S}=S\cup S'\), as required. \(\qedhere\) \qed
+
+\item \(\Rightarrow\) Suppose there exists a subsequence \(\{x_{k_j}\}\) with 
+\[
+x_{k_j} \to x.
+\]
+Let \(B(x, r)\) be any ball centered at \(x\) with radius \(r > 0\).  
+Since \(x_{k_j} \to x\), there exists \(J\) such that for all \(j \ge J\),
+\[
+x_{k_j} \in B(x, r).
+\]
+Thus \(B(x, r)\) contains infinitely many terms of the subsequence, 
+and therefore infinitely many terms \(x_k\) of the original sequence.
+
+\smallskip
+
+\(\Leftarrow\) Conversely, assume that every ball \(B(x, r)\) contains infinitely many terms of \(\{x_k\}\).  
+We will construct a subsequence that converges to \(x\).
+
+For each integer \(m \ge 1\), the ball \(B(x, 1/m)\) contains infinitely many \(x_k\).  
+Choose \(k_1\) such that
+\[
+x_{k_1} \in B(x, 1).
+\]
+Having chosen \(k_j\), select \(k_{j+1} > k_j\) such that
+\[
+x_{k_{j+1}} \in B\!\left(x, \frac{1}{j+1}\right).
+\]
+This is possible because each ball contains infinitely many \(x_k\), 
+so one with index greater than \(k_j\) can always be found.
+
+Then the constructed subsequence satisfies
+\[
+|x_{k_j} - x| < \frac{1}{j}.
+\]
+Hence,
+\[
+|x_{k_j} - x| \to 0,
+\]
+so \(x_{k_j} \to x\).
+
+\smallskip
+
+Therefore, a subsequence of \(\{x_k\}\) converges to \(x\) iff every ball centered at \(x\) contains infinitely many terms of the sequence. \(\qed\)
+
+\item We first show that the quotient cannot have a finite real limit. 
+Let \(M>0\) be arbitrary. Since \(\lim_{x\to a}f(x)=c\neq0\), choose \(\delta_1>0\) so that
+\[
+|f(x)-c|<\frac{|c|}{2}\quad\text{whenever }0<|x-a|<\delta_1.
+\]
+Hence for such \(x\) we have
+\[
+|f(x)|\ge |c|-|f(x)-c|>\frac{|c|}{2}.
+\]
+
+Also, since \(\lim_{x\to a}g(x)=0\), there exists \(\delta_2>0\) such that
+\[
+|g(x)|<\frac{|c|}{2M}\quad\text{whenever }0<|x-a|<\delta_2.
+\]
+
+Put \(\delta=\min(\delta_1,\delta_2)\). For \(0<|x-a|<\delta\) we obtain
+\[
+\Big|\frac{f(x)}{g(x)}\Big|
+= \frac{|f(x)|}{|g(x)|}
+> \frac{|c|/2}{|c|/(2M)} = M.
+\]
+Because \(M>0\) was arbitrary, the quantity \(|f(x)/g(x)|\) is unbounded as \(x\to a\). In particular, \(\frac{f(x)}{g(x)}\) cannot converge to any finite real number.
+
+It remains to discuss the possibility of an infinite limit. If \(g(x)\) keeps a fixed sign in some punctured neighborhood of \(a\) (that is, there exists \(\delta'>0\) such that \(g(x)>0\) for all \(0<|x-a|<\delta'\), or \(g(x)<0\) for all such \(x\)), then the above estimate shows \(|f/g|\to\infty\) and the sign of \(f/g\) is eventually constant, so \(\frac{f(x)}{g(x)}\) tends to \(+\infty\) or \(-\infty\) accordingly. 
+
+If, however, \(g(x)\) changes sign infinitely often arbitrarily close to \(a\), then the quotient takes arbitrarily large positive and negative values near \(a\), so it does not have a (finite or infinite) limit. 
+
+Thus in all cases \(\displaystyle\lim_{x\to a}\frac{f(x)}{g(x)}\) does not exist as a real number; moreover, the quotient either diverges to \(\pm\infty\) (when \(g\) has a fixed sign near \(a\)) or fails to have any extended real limit (when \(g\) changes sign near \(a\)). \(\qed\)
+
+\item 
+Let \(\varepsilon>0\) be given. Since \(\lim_{x\to a} f(x)=c\), there exists \(\delta_1>0\) such that
+\[
+0<|x-a|<\delta_1\quad\text{and }x\in S\quad\Longrightarrow\quad |f(x)-c|<\varepsilon.
+\]
+Similarly, since \(\lim_{x\to a} h(x)=c\), there exists \(\delta_2>0\) such that
+\[
+0<|x-a|<\delta_2\quad\text{and }x\in S\quad\Longrightarrow\quad |h(x)-c|<\varepsilon.
+\]
+Put \(\delta=\min\{\delta_1,\delta_2\}\). If \(0<|x-a|<\delta\) and \(x\in S\), then both
+\[
+c-\varepsilon < f(x) < c+\varepsilon
+\qquad\text{and}\qquad
+c-\varepsilon < h(x) < c+\varepsilon.
+\]
+Because \(f(x)\le g(x)\le h(x)\), it follows that
+\[
+c-\varepsilon < g(x) < c+\varepsilon,
+\]
+so \(|g(x)-c|<\varepsilon\). Since \(\varepsilon>0\) was arbitrary, we conclude
+\[
+\lim_{x\to a} g(x)=c.
+\]
+This proves the Sandwich Lemma. \(\qed\)
+
+\item  Since \(|x-y|\ge0\) for all \(y\in S\), the set \(\{|x-y|:y\in S\}\) is bounded below by \(0\). Due to completeness, the infimum \(d(x,S)\) exists (as a real number).
+
+\smallskip
+
+Fix \(x,z\in\mathbb{R}^n\). For any \(y\in S\) the triangle inequality gives
+\[
+|x-y|\le |x-z|+|z-y|.
+\]
+Taking the infimum over \(y\in S\) on the right-hand side yields
+\[
+d(x,S)\le |x-z| + d(z,S).
+\]
+Rearranging,
+\[
+d(x,S)-d(z,S)\le |x-z|.
+\]
+By symmetry (swap \(x\) and \(z\)) we also obtain
+\[
+d(z,S)-d(x,S)\le |x-z|.
+\]
+Combining these two inequalities produces the two-sided bound
+\[
+|d(x,S)-d(z,S)|\le |x-z|.
+\]
+Thus it is continuous on \(\mathbb{R}^n\).
+
+\smallskip
+
+
+Then, suppose \(x\in\overline{S}\). Then there exists a sequence \(\{y_k\}\subset S\) with \(y_k\to x\). Hence \(|x-y_k|\to0\), so
+\[
+0\le d(x,S)\le \lim_{k\to\infty}|x-y_k|=0,
+\]
+and therefore \(d(x,S)=0\). This shows \(\overline{S}\subset\{x:d(x,S)=0\}\).
+
+Conversely, suppose \(d(x,S)=0\). For each integer \(m\ge1\) there exists \(y_m\in S\) such that
+\[
+|x-y_m|\le d(x,S)+\frac{1}{m}=\frac{1}{m},
+\]
+because one can choose points in \(S\) that approximate the infimum to within \(1/m\). Thus \(|x-y_m|\to0\), so \(y_m\to x\), which means \(x\in\overline{S}\). Hence \(\{x:d(x,S)=0\}\subset\overline{S}\).
+
+Combining the two inclusions yields
+\[
+\{x:d(x,S)=0\}=\overline{S}.
+\]
+As noted above, if \(S\) is closed then \(\overline{S}=S\), so in that case \(\{x:d(x,S)=0\}=S\). \(\qedhere\)
+
+
+\end{enumerate}
+\end{document}

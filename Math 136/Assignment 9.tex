@@ -1,0 +1,177 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 136 Homework \#9}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item
+\begin{enumerate}
+    \item We are given the function \( f(x, y) = x^4 + 4y^3 + 5 \). To find the critical points inside the unit disk \( D = \{(x, y): x^2 + y^2 \leq 1\} \), we compute the gradient and set it to zero:
+    \[
+    f_x = \frac{\partial f}{\partial x} = 4x^3, \quad f_y = \frac{\partial f}{\partial y} = 12y^2
+    \]
+    Setting both partials to zero:
+    \[
+    4x^3 = 0 \Rightarrow x = 0, \quad 12y^2 = 0 \Rightarrow y = 0
+    \]
+    The only critical point inside the disk is at \( (0, 0) \). Evaluating the function at this point:
+    \[
+    f(0, 0) = 0^4 + 4 \cdot 0^3 + 5 = 5
+    \]
+
+    \item To evaluate the function on the boundary of the unit disk, we use the parametrization
+    \[
+    x = \cos t, \quad y = \sin t, \quad 0 \leq t \leq 2\pi
+    \]
+    Substituting into the function:
+    \[
+    f(\cos t, \sin t) = \cos^4 t + 4 \sin^3 t + 5
+    \]
+    Define \( g(t) = \cos^4 t + 4 \sin^3 t + 5 \). We evaluate \( g(t) \) at common values to find extrema:
+    \begin{align*}
+    g(0) &= \cos^4(0) + 4\sin^3(0) + 5 = 1 + 0 + 5 = 6 \\
+    g\left(\frac{\pi}{2}\right) &= \cos^4\left(\frac{\pi}{2}\right) + 4\sin^3\left(\frac{\pi}{2}\right) + 5 = 0 + 4 + 5 = 9 \\
+    g(\pi) &= \cos^4(\pi) + 4\sin^3(\pi) + 5 = 1 + 0 + 5 = 6 \\
+    g\left(\frac{3\pi}{2}\right) &= \cos^4\left(\frac{3\pi}{2}\right) + 4\sin^3\left(\frac{3\pi}{2}\right) + 5 = 0 - 4 + 5 = 1
+    \end{align*}
+    So the minimum occurs at \( (0, -1) \) with value \( 1 \), and the maximum occurs at \( (0, 1) \) with value \( 9 \).
+
+    \item The maximum value of the function is \( 9 \), attained at the point \( (0, 1) \). The minimum value of the function is \( 1 \), attained at the point \( (0, -1) \). The value at the only interior critical point \( (0, 0) \) is \( 5 \), which is neither the minimum nor the maximum.
+
+    \item 
+    \[
+    y = \sqrt{1 - x^2}, \quad y = -\sqrt{1 - x^2}, \quad -1 \leq x \leq 1
+    \]
+    Since the \( y \)-term in the original function is cubic, the function will behave differently on each half of the boundary. Using both forms would double the work, making the parametrization a more efficient method.
+\end{enumerate}
+
+\item Let the surface be given by
+
+\[
+z = x f\left(\frac{x}{y}\right)
+\]
+
+where \( f \) is continuously differentiable.
+
+Let \( u = \frac{x}{y} \), so that \( z = x f(u) \).
+
+First, compute the partial derivatives:
+
+\[
+\frac{\partial z}{\partial x} = f(u) + x f'(u) \cdot \frac{1}{y} = f\left(\frac{x}{y}\right) + \frac{x}{y} f'\left(\frac{x}{y}\right)
+\]
+
+\[
+\frac{\partial z}{\partial y} = x f'(u) \cdot \left(-\frac{x}{y^2}\right) = -\frac{x^2}{y^2} f'\left(\frac{x}{y}\right)
+\]
+
+Let \( (x_0, y_0) \) be a point on the surface, and let \( u_0 = \frac{x_0}{y_0} \). Then
+
+\[
+z_0 = x_0 f(u_0)
+\]
+
+The equation of the tangent plane at \( (x_0, y_0, z_0) \) is
+
+\[
+z = z_0 + \left.\frac{\partial z}{\partial x}\right|_{(x_0, y_0)} (x - x_0) + \left.\frac{\partial z}{\partial y}\right|_{(x_0, y_0)} (y - y_0)
+\]
+
+\[
+z = x_0 f(u_0) + \left[f(u_0) + u_0 f'(u_0)\right](x - x_0) - u_0^2 f'(u_0)(y - y_0)
+\]
+
+Now, substitute \( x = 0, y = 0 \) into the tangent plane:
+
+\[
+z = x_0 f(u_0) - x_0 [f(u_0) + u_0 f'(u_0)] + y_0 u_0^2 f'(u_0)
+\]
+
+Note that \( x_0 = y_0 u_0 \), so \( x_0 u_0 = y_0 u_0^2 \). Then
+
+\[
+z = x_0 f(u_0) - x_0 f(u_0) - x_0 u_0 f'(u_0) + y_0 u_0^2 f'(u_0)
+\]
+
+\[
+= 0 - x_0 u_0 f'(u_0) + y_0 u_0^2 f'(u_0) = - y_0 u_0^2 f'(u_0) + y_0 u_0^2 f'(u_0) = 0
+\]
+
+Therefore, the point \( (0, 0, 0) \) lies on all tangent planes.
+
+Hence, all tangent planes to the surface \( z = x f(x/y) \) pass through the common point \( (0, 0, 0) \).
+
+\item 
+Let \( w = f(x, y) \), \( x = g(u, v) \), and define \( k(u, v) = f(g(u, v), v) \).
+
+We want to find expressions for the first and second partial derivatives of \( k(u, v) \) with respect to \( v \).
+
+First, compute the first partial derivative:
+
+\[
+\frac{\partial k}{\partial v} = \frac{\partial f}{\partial x} \cdot \frac{\partial g}{\partial v} + \frac{\partial f}{\partial y}
+\]
+
+\[
+\frac{\partial k}{\partial v} = f_x(g(u, v), v) \cdot g_v(u, v) + f_y(g(u, v), v)
+\]
+
+Now compute the second partial derivative \( \frac{\partial^2 k}{\partial v^2} \). Start by differentiating \( \frac{\partial k}{\partial v} \) again with respect to \( v \):
+
+\[
+\frac{\partial^2 k}{\partial v^2} = \frac{d}{dv} \left[ f_x(g(u, v), v) \cdot g_v(u, v) + f_y(g(u, v), v) \right]
+\]
+
+Apply the product and chain rules:
+
+\[
+\frac{d}{dv} \left[ f_x(g(u, v), v) \cdot g_v(u, v) \right] = \left( f_{xx}(g(u, v), v) \cdot g_v(u, v) + f_{xy}(g(u, v), v) \right) \cdot g_v(u, v)\]
+\[
++f_x(g(u, v), v) \cdot g_{vv}(u, v)
+\]
+
+\[
+= f_{xx}(g(u, v), v) \cdot [g_v(u, v)]^2 + f_{xy}(g(u, v), v) \cdot g_v(u, v) + f_x(g(u, v), v) \cdot g_{vv}(u, v)
+\]
+
+Also differentiate the second term \( f_y(g(u, v), v) \):
+
+\[
+\frac{d}{dv} f_y(g(u, v), v) = f_{yx}(g(u, v), v) \cdot g_v(u, v) + f_{yy}(g(u, v), v)
+\]
+
+Since mixed partials are equal under continuity, \( f_{yx} = f_{xy} \), we have:
+
+\[
+\frac{d}{dv} f_y(g(u, v), v) = f_{xy}(g(u, v), v) \cdot g_v(u, v) + f_{yy}(g(u, v), v)
+\]
+
+Add both parts together:
+
+\[
+\frac{\partial^2 k}{\partial v^2} = f_{xx}(g(u, v), v) \cdot [g_v(u, v)]^2 + 2 f_{xy}(g(u, v), v) \cdot g_v(u, v) + f_x(g(u, v), v) \cdot g_{vv}(u, v) + f_{yy}(g(u, v), v)
+\]
+
+\end{enumerate}
+\end{document}

@@ -1,0 +1,425 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 334 Homework \#4}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item Let \(I\) be an interval and suppose \(f\) is differentiable on \(I\) with
+\(f'(x)>0\) for all \(x\in I\) except at finitely many points where \(f'(x)=0\).
+We prove \(f\) is strictly increasing on \(I\).
+
+Fix \(a,b\in I\) with \(a<b\). If \(f'(x)>0\) for every \(x\in(a,b)\) then
+by the Mean Value Theorem there exists \(c\in(a,b)\) with
+\[
+f'(c)=\frac{f(b)-f(a)}{b-a}>0,
+\]
+so \(f(b)-f(a)>0\), and hence \(f(a)<f(b)\).
+
+Otherwise let \(S=\{s_1<s_2<\cdots<s_n\}\) be the (finite) set of points in \((a,b)\)
+where \(f'(x)=0\). Consider the partition of \([a,b]\) by these points:
+\[
+[a,s_1],\ [s_1,s_2],\ \dots,\ [s_{n-1},s_n],\ [s_n,b].
+\]
+By construction, on each open subinterval between consecutive partition points
+the derivative is strictly positive. Thus if \(x<y\) lie in the same open
+subinterval, the Mean Value Theorem gives a point \(c\) between \(x\) and \(y\)
+with \(f'(c)>0\), hence \(f(y)>f(x)\). Therefore \(f\) is strictly increasing
+on each open subinterval of the partition.
+
+Using these strict inequalities on the successive subintervals and continuity of
+\(f\) at the partition points, we obtain the chain
+\[
+f(a)<f(s_1)<f(s_2)<\cdots<f(s_n)<f(b),
+\]
+so in particular \(f(a)<f(b)\).
+
+Since \(a<b\) were arbitrary, \(f\) is strictly increasing on \(I\). \(\qed\)
+
+\item For each of the following functions \(f\), we compute (i) \(\nabla f\), and (ii) 
+the directional derivative of \(f\) at the point \((1,-2)\) in the direction 
+\(\mathbf{u} = \left(\frac{3}{5}, \frac{4}{5}\right)\).
+
+\textbf{(a)} \(\displaystyle f(x,y) = x^2y + \sin(\pi xy)\)
+
+First compute the partial derivatives:
+\[
+f_x = 2xy + \pi y \cos(\pi xy), \quad 
+f_y = x^2 + \pi x \cos(\pi xy).
+\]
+Hence,
+\[
+\nabla f = \left( 2xy + \pi y \cos(\pi xy),\; x^2 + \pi x \cos(\pi xy) \right).
+\]
+
+At the point \((1, -2)\):
+\[
+\nabla f(1,-2) = 
+\left( 2(1)(-2) + \pi(-2)\cos(-2\pi),\; 1^2 + \pi(1)\cos(-2\pi) \right)
+= (-4 - 2\pi,\, 1 + \pi).
+\]
+
+The directional derivative in the direction \(\mathbf{u}\) is
+\[
+D_{\mathbf{u}}f(1,-2) = \nabla f(1,-2) \cdot \mathbf{u} 
+= (-4 - 2\pi)\left(\frac{3}{5}\right) + (1 + \pi)\left(\frac{4}{5}\right)
+= \frac{-12 - 6\pi + 4 + 4\pi}{5} = \frac{-8 - 2\pi}{5}.
+\]
+
+
+\textbf{(b)} \(\displaystyle f(x,y) = e^{4x - y^2}\)
+
+Partial derivatives:
+\[
+f_x = 4e^{4x - y^2}, \quad f_y = -2y e^{4x - y^2}.
+\]
+Hence,
+\[
+\nabla f = \left( 4e^{4x - y^2},\; -2y e^{4x - y^2} \right).
+\]
+
+At \((1, -2)\):
+\[
+\nabla f(1,-2) = \left( 4e^{4(1) - (-2)^2},\; -2(-2)e^{4 - 4} \right)
+= (4e^0,\, 4e^0) = (4, 4).
+\]
+
+Directional derivative:
+\[
+D_{\mathbf{u}}f(1,-2) = (4,4)\cdot\left(\frac{3}{5},\frac{4}{5}\right)
+= \frac{12 + 16}{5} = \frac{28}{5}.
+\]
+
+
+\textbf{(c)} \(\displaystyle f(x,y) = \frac{x + 2y + 4}{7x + 3y}\)
+
+Let \(N = x + 2y + 4\) and \(D = 7x + 3y\).
+Then by the quotient rule,
+\[
+f_x = \frac{D(1) - N(7)}{D^2} = \frac{7x + 3y - 7(x + 2y + 4)}{(7x + 3y)^2}
+= \frac{-11y - 28}{(7x + 3y)^2},
+\]
+\[
+f_y = \frac{D(2) - N(3)}{D^2} = \frac{2(7x + 3y) - 3(x + 2y + 4)}{(7x + 3y)^2}
+= \frac{11x - 12}{(7x + 3y)^2}.
+\]
+
+Hence,
+\[
+\nabla f = \left( \frac{-11y - 28}{(7x + 3y)^2},\; \frac{11x - 12}{(7x + 3y)^2} \right).
+\]
+
+At \((1, -2)\):
+\[
+7x + 3y = 7(1) + 3(-2) = 1,
+\]
+so
+\[
+\nabla f(1,-2) = \left( -11(-2) - 28,\; 11(1) - 12 \right) = (22 - 28,\; -1) = (-6, -1).
+\]
+
+Directional derivative:
+\[
+D_{\mathbf{u}}f(1,-2) = (-6, -1)\cdot\left(\frac{3}{5}, \frac{4}{5}\right)
+= \frac{-18 - 4}{5} = \frac{-22}{5}.
+\]
+
+\item 
+Let \(S\subset\mathbb{R}^n\) be open and suppose each partial derivative
+\(\partial_j f\) exists on \(S\) and there is a constant \(M>0\) with
+\(|\partial_j f(x)|\le M\) for all \(x\in S\) and all \(j=1,\dots,n\).
+We show \(f\) is continuous on \(S\).
+
+Fix \(a=(a_1,\dots,a_n)\in S\). Since \(S\) is open there exists
+\(\varepsilon>0\) such that the closed box
+\[
+B=\{x\in\mathbb{R}^n:\ |x_j-a_j|\le\varepsilon\ \text{for }j=1,\dots,n\}
+\]
+is contained in \(S\). Let \(x=(x_1,\dots,x_n)\in B\) be arbitrary and
+write \(x\) as a successive change from \(a\) by defining the points
+\[
+a^{(0)}=a,\quad a^{(1)}=(x_1,a_2,\dots,a_n),\quad
+a^{(2)}=(x_1,x_2,a_3,\dots,a_n),\ \ldots,\ 
+a^{(n)}=x.
+\]
+Then
+\[
+f(x)-f(a)=\sum_{j=1}^n\bigl(f(a^{(j)})-f(a^{(j-1)})\bigr).
+\]
+For each fixed \(j\) consider the function of one variable
+\[
+g_j(t)=f\bigl(a^{(j-1)}+t(x_j-a_j)e_j\bigr), \quad t\in[0,1],
+\]
+where \(e_j\) is the \(j\)-th standard basis vector.  
+By the one-dimensional Mean Value Theorem there exists \(t_j\in(0,1)\) with
+\[
+f(a^{(j)})-f(a^{(j-1)})=g_j(1)-g_j(0)=g_j'(t_j)
+= \partial_j f\bigl(a^{(j-1)}+t_j(x_j-a_j)e_j\bigr)\,(x_j-a_j).
+\]
+Using the bound on the partial derivatives we obtain
+\[
+\bigl|f(a^{(j)})-f(a^{(j-1)})\bigr|
+\le M\,|x_j-a_j|.
+\]
+Summing over \(j\) gives
+\[
+|f(x)-f(a)| \le \sum_{j=1}^n M\,|x_j-a_j| = M\|x-a\|_1
+\le M\sqrt{n}\,\|x-a\|_2.
+\]
+Thus for every \(\delta>0\) we can choose \(\rho=\min\{\varepsilon,\delta/(M\sqrt{n})\}\)
+so that \(\|x-a\|_2<\rho\) implies \(|f(x)-f(a)|<\delta\). Therefore \(f\)
+is continuous at \(a\). Since \(a\in S\) was arbitrary, \(f\) is continuous on \(S\).
+\(\square\)
+
+
+\item
+
+\begin{itemize}
+\item \(w=f(x,y,t),\; x=g(y,t),\; y=h(t).\) \\
+Since \(x\) and \(y\) are functions of \(t\), by the chain rule
+\[
+\frac{dw}{dt}=f_x\frac{dx}{dt}+f_y\frac{dy}{dt}+f_t,
+\]
+where the partials \(f_x,f_y,f_t\) are evaluated at \((x(t),y(t),t)\).
+Now \(y'(t)=h'(t)\) and
+\[
+\frac{dx}{dt}=g_y(y(t),t)\,y'(t)+g_t(y(t),t)
+= g_y(h(t),t)\,h'(t)+g_t(h(t),t).
+\]
+Hence
+\[
+\displaystyle \frac{dw}{dt}
+= f_x\bigl(g(h(t),t),h(t),t\bigr)\bigl(g_y(h(t),t)h'(t)+g_t(h(t),t)\bigr)
+\]
+\[
++ f_y\bigl(g(h(t),t),h(t),t\bigr)h'(t) + f_t\bigl(g(h(t),t),h(t),t\bigr).
+\]
+
+\item \(w=f(x,u,v),\; u=g(x,y),\; v=h(x,z).\) \\
+Here \(w\) depends on \(x,y,z\) through \(x,u(x,y),v(x,z)\). Using the chain rule
+for partials (complete dependence on \(x\)):
+\[
+\boxed{\partial_x w = f_1 + f_2\,\partial_x u + f_3\,\partial_x v
+= f_1(x,u,v)+ f_2(x,u,v)\,g_x(x,y) + f_3(x,u,v)\,h_x(x,z),}
+\]
+where \(f_1=\partial_1 f,\; f_2=\partial_2 f,\; f_3=\partial_3 f\) evaluated at \((x,u,v)\). Similarly,
+\[
+\boxed{\partial_y w = f_2(x,u,v)\,g_y(x,y),}
+\qquad
+\boxed{\partial_z w = f_3(x,u,v)\,h_z(x,z).}
+\]
+
+\item \(w=f(u),\; u=g(x,y),\; y=h(x).\) \\
+Since \(y\) is a function of \(x\), \(u=u(x,y(x))\). By the chain rule
+\[
+\frac{dw}{dx}=f'(u)\frac{du}{dx},\qquad
+\frac{du}{dx}=g_x(x,y)+g_y(x,y)\frac{dy}{dx}=g_x(x,y)+g_y(x,y)h'(x).
+\]
+Hence
+\[
+\boxed{\displaystyle \frac{dw}{dx}=f'\bigl(g(x,h(x))\bigr)\bigl(g_x(x,h(x))+g_y(x,h(x))\,h'(x)\bigr).}
+\]
+\end{itemize}
+
+\item Compute \(\partial_x w\) and \(\partial_y w\) for each \(w\).
+
+In all formulas below \(f_1,f_2,f_3\) denote \(\partial_1 f,\partial_2 f,\partial_3 f\)
+evaluated at the indicated argument.
+
+\begin{itemize}
+\item \(w=f(2x-y^2,\; x\sin 3y,\; x^4).\) \\
+Let \(u=2x-y^2,\; v=x\sin3y,\; s=x^4\). Then
+\[
+\partial_x w = f_1\cdot 2 + f_2\cdot(\sin 3y) + f_3\cdot 4x^3,
+\]
+\[
+\partial_y w = f_1\cdot(-2y) + f_2\cdot\bigl(x\cdot 3\cos 3y\bigr) + f_3\cdot 0.
+\]
+
+\item \(w=f(e^{\,x-3y},\; \log(x^2+1),\; \sqrt{y^4+4}).\) \\
+With \(u=e^{x-3y},\; v=\log(x^2+1),\; s=\sqrt{y^4+4}\),
+\[
+\partial_x w = f_1\cdot e^{x-3y} + f_2\cdot\frac{2x}{x^2+1} + f_3\cdot 0,
+\]
+\[
+\partial_y w = f_1\cdot(-3e^{x-3y}) + f_2\cdot 0
++ f_3\cdot\frac{4y^3}{2\sqrt{y^4+4}}
+= f_1(-3e^{x-3y}) + f_3\frac{2y^3}{\sqrt{y^4+4}}.
+\]
+
+\item \(w=\arctan\bigl(f(y^2,\;2x-y,\;-4)\bigr).\) \\
+Set \(F=f(y^2,2x-y,-4)\). Then \(w=\arctan(F)\) so
+\[
+\partial_x w=\frac{1}{1+F^2}\,\partial_x F,
+\qquad
+\partial_y w=\frac{1}{1+F^2}\,\partial_y F.
+\]
+Now \(\partial_x F = f_1\cdot 0 + f_2\cdot 2 + f_3\cdot 0 = 2f_2,\)
+and \(\partial_y F = f_1\cdot 2y + f_2\cdot(-1) = 2y f_1 - f_2.\)
+Thus
+\[
+\boxed{\partial_x w = \frac{2f_2}{1+F^2},\qquad
+\partial_y w = \frac{2y f_1 - f_2}{1+F^2},}
+\]
+where \(f_1,f_2,f_3\) and \(F\) are evaluated at \((y^2,2x-y,-4)\).
+\end{itemize}
+
+\item Tangent planes in \(\mathbb{R}^3\).
+
+For each surface either use \(z=g(x,y)\) and \(z-z_0=g_x(x_0,y_0)(x-x_0)+g_y(x_0,y_0)(y-y_0)\)
+or \(F(x,y,z)=0\) and \(\nabla F(x_0,y_0,z_0)\cdot((x,y,z)-(x_0,y_0,z_0))=0\).
+
+\begin{itemize}
+\item \(z=x^2-y^3,\; a=(2,-1,5).\) \\
+Compute \(z_x=2x,\; z_y=-3y^2\). At \((2,-1)\): \(z_x=4,\; z_y=-3\).
+Tangent plane:
+\[
+\boxed{\,z-5 = 4(x-2) -3(y+1)\, }.
+\]
+
+\item \(x^2+2y^2+3z^2=6,\; a=(1,1,-1).\) \\
+Set \(F(x,y,z)=x^2+2y^2+3z^2-6\). Then
+\(\nabla F=(2x,4y,6z)\). At \((1,1,-1)\): \(\nabla F=(2,4,-6)\).
+Tangent plane:
+\[
+2(x-1)+4(y-1)-6(z+1)=0,
+\]
+or equivalently
+\[
+\boxed{\,z=-1+\tfrac{1}{3}(x-1)+\tfrac{2}{3}(y-1)\, }.
+\]
+
+\item \(z=\sqrt{x}+\arctan y,\; a=(9,0,3).\) \\
+Compute \(z_x=\tfrac{1}{2\sqrt{x}},\; z_y=\tfrac{1}{1+y^2}\). At \((9,0)\):
+\(z_x=\tfrac{1}{6},\; z_y=1\). Tangent plane:
+\[
+\boxed{\,z-3 = \tfrac{1}{6}(x-9) + 1\cdot(y-0)\, }.
+\]
+
+\item \(xyz^2-\log(z-1)=8,\; a=(-2,-1,2).\) \\
+Let \(F(x,y,z)=xyz^2-\log(z-1)-8\). Then
+\[
+F_x = yz^2,\quad F_y = xz^2,\quad F_z = 2xyz - \frac{1}{z-1}.
+\]
+At \((-2,-1,2)\): \(F_x=-4,\; F_y=-8,\; F_z=7\). Tangent plane:
+\[
+-4(x+2)-8(y+1)+7(z-2)=0,
+\]
+or
+\[
+\boxed{\, -4(x+2)-8(y+1)+7(z-2)=0 \, }.
+\]
+\end{itemize}
+
+\item 
+\begin{itemize}
+
+\item Let \(x(t),y(t),z(t)\) be a \(C^1\) curve and suppose
+\(x^2+y z^2\) is constant along the curve. Differentiating with respect to \(t\)
+and using the product rule gives
+\[
+\frac{d}{dt}\bigl(x^2+y z^2\bigr)=2x\frac{dx}{dt}+\frac{dy}{dt}\,z^2+2y z\frac{dz}{dt}=0.
+\]
+At the point \((x,y,z)=(2,2,5)\) with \(\dfrac{dx}{dt}=1\) and \(\dfrac{dy}{dt}=-1\)
+we substitute to obtain
+\[
+2\cdot 2\cdot 1 + (-1)\cdot 5^2 + 2\cdot 2\cdot 5\cdot\frac{dz}{dt}=0,
+\]
+so
+\[
+4-25+20\frac{dz}{dt}=0 \quad\Longrightarrow\quad 20\frac{dz}{dt}=21,
+\]
+hence
+\[
+\boxed{\displaystyle \frac{dz}{dt}=\frac{21}{20}.}
+\]
+
+\item Assume \(x(t)y(t)z(t)=8\) along the curve. Differentiate:
+\[
+\frac{d}{dt}\bigl(xyz\bigr)=x'y z + x y' z + x y z' =0.
+\]
+At the time when \(x'=1,\ x=5,\ y=2\) we first compute \(z\) from \(xyz=8\):
+\[
+z=\frac{8}{xy}=\frac{8}{5\cdot 2}=\frac{4}{5}.
+\]
+Plugging into the differentiated equation gives
+\[
+(1)\cdot 2\cdot\frac{4}{5} + 5\cdot y'\cdot\frac{4}{5} + 5\cdot 2\cdot z' =0,
+\]
+which simplifies to
+\[
+\frac{8}{5} + 4y' + 10 z' =0.
+\]
+Solving for \(y'\) in terms of \(z'\) yields
+\[
+4y' = -10 z' - \frac{8}{5}\quad\Longrightarrow\quad
+\boxed{\displaystyle y' = -\frac{5}{2}\,z' - \frac{2}{5}.}
+\]
+
+\item Let \(f:U\subset\mathbb{R}^2\to\mathbb{R}\), \(g(x,y)=(x,y,f(x,y))\)
+and \(h(x,y,z)=z-f(x,y)\).
+The Jacobian (the \(3\times 2\) matrix) of \(g\) is
+\[
+Dg(x,y)=
+\begin{pmatrix}
+\partial_x (x) & \partial_y (x)\\[4pt]
+\partial_x (y) & \partial_y (y)\\[4pt]
+\partial_x f(x,y) & \partial_y f(x,y)
+\end{pmatrix}
+=
+\begin{pmatrix}
+1 & 0\\[4pt]
+0 & 1\\[4pt]
+f_x(x,y) & f_y(x,y)
+\end{pmatrix}.
+\]
+The gradient of \(h\) (viewed as a function on \(\mathbb{R}^3\)) is the \(1\times 3\)
+row vector
+\[
+\nabla h(x,y,z) = \bigl(h_x,\,h_y,\,h_z\bigr)
+= \bigl(-f_x(x,y),\ -f_y(x,y),\ 1\bigr).
+\]
+
+\item To show the range of \(Dg(x,y)\) is perpendicular to \(\nabla h\)
+at the point with \(z=f(x,y)\), it suffices to check that \(\nabla h(x,y,f(x,y))\)
+is orthogonal to each column of \(Dg(x,y)\). The columns of \(Dg\) are
+\[
+g_x=(1,0,f_x(x,y))^{T},\qquad g_y=(0,1,f_y(x,y))^{T}.
+\]
+Take the dot products with \(\nabla h=(-f_x,-f_y,1)\):
+\[
+\nabla h\cdot g_x = -f_x\cdot 1 + (-f_y)\cdot 0 + 1\cdot f_x = 0,
+\]
+\[
+\nabla h\cdot g_y = -f_x\cdot 0 + (-f_y)\cdot 1 + 1\cdot f_y = 0.
+\]
+Thus both columns of \(Dg\) are orthogonal to \(\nabla h\), so every vector in the range
+of \(Dg(x,y)\) is perpendicular to \(\nabla h(x,y,f(x,y))\). \(\square\)
+
+\end{itemize}
+
+
+
+
+\end{enumerate}
+\end{document}

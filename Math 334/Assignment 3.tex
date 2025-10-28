@@ -1,0 +1,115 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 334 Homework \#2}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item Let \(S\subset\mathbb{R}^n\) be infinite and bounded. Since \(S\) is infinite, choose a sequence \((x_k)_{k=1}^\infty\) of distinct points of \(S\). Because \(S\) is bounded, the sequence \((x_k)\) is bounded in \(\mathbb{R}^n\). By theorem 1.21 in chapter 1.6, any bounded sequence in \(\mathbb{R}^n\) has a convergent subsequence, so there exists a subsequence \((x_{k_j})\) and a point \(x\in\mathbb{R}^n\) such that
+\[
+x_{k_j}\longrightarrow x \qquad (j\to\infty).
+\]
+
+We show that \(x\) is an accumulation point of \(S\). Fix \(r>0\). Since \(x_{k_j}\to x\), there exists \(J\) such that for all \(j\ge J\) we have \(\|x_{k_j}-x\|<r\). Each \(x_{k_j}\) lies in \(S\), and the subsequence values are all distinct, hence the open ball \(B(x,r)\) contains infinitely many points of \(S\). Because \(r>0\) was arbitrary, every neighborhood of \(x\) contains infinitely many points of \(S\), so \(x\) is an accumulation point of \(S\).
+
+Therefore every infinite bounded subset of \(\mathbb{R}^n\) has an accumulation point.
+
+\item Let \(S\subset\mathbb{R}^n\) be compact and \(f:S\to\mathbb{R}\) continuous with \(f(x)>0\) for every \(x\in S\). By continuity and compactness, \(f\) attains a minimum on \(S\); that is, there exists \(x_0\in S\) such that
+\[
+m:=\min_{x\in S} f(x)=f(x_0).
+\]
+Since \(f(x)>0\) for every \(x\in S\), we have \(m>0\). Setting \(c:=m\) yields \(c>0\) and \(f(x)\ge c\) for all \(x\in S\).
+
+\item
+Let \(\{S_k\}_{k=1}^\infty\) be a sequence of nonempty compact subsets of \(\mathbb{R}^n\) with
+\[
+S_1\supseteq S_2\supseteq S_3\supseteq\cdots .
+\]
+ Choose \(x_k\in S_k\) for each \(k\). The sequence \((x_k)\) is contained in \(S_1\), hence bounded, so by the Bolzano--Weierstrass theorem it has a convergent subsequence \((x_{k_j})\) with limit \(x\in\mathbb{R}^n\). Fix \(m\in\mathbb{N}\). For every \(j\) with \(k_j\ge m\) we have \(x_{k_j}\in S_{k_j}\subseteq S_m\). Since \(S_m\) is closed, the limit \(x\) belongs to \(S_m\). As \(m\) was arbitrary, \(x\in\bigcap_{m=1}^\infty S_m\).
+
+\item \begin{enumerate}
+    \item Let \(H=\{(x,y)\in\mathbb{R}^2:x^2-y^2=1\}\). Write
+\[
+H_+=\{(x,y)\in H:x>0\},\qquad H_-=\{(x,y)\in H:x<0\}.
+\]
+Both \(H_+\) and \(H_-\) are nonempty and disjoint, and
+\[
+H_+=H\cap\{(x,y):x>0\},\qquad H_-=H\cap\{(x,y):x<0\},
+\]
+so \(H_+\) and \(H_-\) are open in the subspace topology of \(H\). Hence \(H=H_+\cup H_-\) is a nontrivial separation of \(H\), and \(H\) is disconnected.
+\item
+% Problem 1.b
+Let \(S\subset\mathbb{R}^n\) be finite with at least two points. Choose distinct \(p,q\in S\) and set \(A=\{p\}\), \(B=S\setminus\{p\}\). Because \(S\) is finite the quantity
+\[
+\delta:=\min\{\|p-r\|:r\in S,\ r\neq p\}
+\]
+is positive. The open ball \(B(p,\delta/2)\) meets \(S\) only at \(p\), so
+\[
+A=S\cap B(p,\delta/2)
+\]
+is open in the subspace topology of \(S\). Thus \(A\) and \(B\) are nonempty disjoint open-in-\(S\) sets with \(S=A\cup B\), so \(S\) is disconnected.
+
+% Problem 1.c
+\item
+Let \(T=\{(x,y,z)\in\mathbb{R}^3:xyz>0\}\). Define
+\[
+U=T\cap\{(x,y,z):x>0\},\qquad V=T\cap\{(x,y,z):x<0\}.
+\]
+The sets \(\{x>0\}\) and \(\{x<0\}\) are open in \(\mathbb{R}^3\), hence \(U\) and \(V\) are open in the subspace topology of \(T\). They are nonempty, disjoint, and \(T=U\cup V\), so \(T\) is disconnected.
+\end{enumerate}
+
+\item
+Let \(I\subset\mathbb{R}\) be an interval and \(f:I\to\mathbb{R}\) continuous and one-to-one. We prove \(f\) is strictly monotone. If \(f\) were not monotone there would exist \(x<y<z\) in \(I\) with either
+\[
+f(x)<f(y)>f(z)\quad\text{or}\quad f(x)>f(y)<f(z).
+\]
+Replacing \((x,y,z)\) by \((z,y,x)\) if necessary, assume \(f(x)<f(y)\) and \(f(z)<f(y)\). If \(f(x)<f(z)\) then
+\[
+f(x)<f(z)<f(y),
+\]
+and by the Intermediate Value Theorem there exists \(w\in(x,y)\) with \(f(w)=f(z)\). But \(w\neq z\) and \(f(w)=f(z)\) contradicts injectivity. If instead \(f(z)<f(x)\) we swap \(x\) and \(z\) and reach the same contradiction. Therefore no such triple exists and \(f\) must be monotone; injectivity forces it to be strictly monotone.
+
+\item
+Let \(A\subset\mathbb{R}^n\) be open. Suppose first that \(A\) is disconnected. Then there exist nonempty disjoint sets \(U,V\) open in the subspace \(A\) with \(A=U\cup V\). By definition of the subspace topology there are open sets \(O_1,O_2\subset\mathbb{R}^n\) with \(U=A\cap O_1\) and \(V=A\cap O_2\). Since \(A\) is open in \(\mathbb{R}^n\), the intersections \(U=A\cap O_1\) and \(V=A\cap O_2\) are open in \(\mathbb{R}^n\). Thus \(A\) is the union of two disjoint nonempty open subsets of \(\mathbb{R}^n\).
+
+Conversely, if \(A=U\cup V\) with \(U\) and \(V\) nonempty, disjoint, and open in \(\mathbb{R}^n\), then \(U\) and \(V\) are open in the subspace \(A\) (indeed \(U=A\cap U\), \(V=A\cap V\)), so \(A\) is disconnected. This proves the equivalence.
+
+\item Let \( S \subset \mathbb{R}^n \) be connected and let \( f : S \to \mathbb{R} \) be continuous such that \( f(S) \subset \mathbb{Z} \). 
+
+The continuous image of a connected set is connected, so \( f(S) \) is a connected subset of \( \mathbb{R} \). 
+Every connected subset of \( \mathbb{R} \) is an interval. 
+However, the integers have gaps between consecutive values, so the only subsets of the integers that form intervals are those that contain just one number. 
+
+Hence \( f(S) = \{k\} \) for some integer \( k \). 
+This means \( f(x) = k \) for all \( x \in S \), so \( f \) must be constant on \( S \).
+
+\item Let \(S\subset\mathbb{R}^n\) be compact and let \(f:S\to\mathbb{R}^m\) be continuous and one-to-one. We prove that the inverse map \(f^{-1}:f(S)\to S\) is continuous.
+
+Let \(C\subset\mathbb{R}^n\) be closed. Then \(S\cap C\) is closed in \(S\), and since \(S\) is compact the set \(S\cap C\) is compact. The continuous image \(f(S\cap C)\) is compact in \(\mathbb{R}^m\), and compact subsets of \(\mathbb{R}^m\) are closed. Note that
+\[
+(f^{-1})^{-1}(C)=\{y\in f(S): f^{-1}(y)\in C\}=\{f(x):x\in S\cap C\}=f(S\cap C),
+\]
+so \((f^{-1})^{-1}(C)\) is closed in \(f(S)\). Hence the preimage under \(f^{-1}\) of every closed set in \(\mathbb{R}^n\) is closed in \(f(S)\), which means \(f^{-1}:f(S)\to S\) is continuous.
+
+\end{enumerate}
+\end{document}

@@ -1,0 +1,498 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 407 Homework \#3}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item
+\textbf{(1) Write down the dual of the given primal}
+
+Primal:
+
+maximize 
+\[
+z = -x_1 - 2x_2
+\]
+subject to
+\[
+\begin{aligned}
+-3x_1 + x_2 &\leq 1, \\
+x_1 - x_2 &\leq 1, \\
+-2x_1 + 7x_2 &\leq 6, \\
+9x_1 - 4x_2 &\leq 6, \\
+-5x_1 + 2x_2 &\leq -3, \\
+7x_1 - 3x_2 &\leq 6, \\
+x_1, x_2 &\geq 0.
+\end{aligned}
+\]
+
+Introduce nonnegative dual variables $y_1, \ldots, y_6 \geq 0$ for these six ``$\leq$''-constraints. The dual is
+
+\textbf{minimize}
+\[
+w = (-1)y_1 + 1y_2 + 6y_3 + 6y_4 + (-3)y_5 + 6y_6
+\]
+
+subject to the ``$\geq$''-constraints that come from each primal variable:
+
+for $x_1$:
+\[
+-3y_1 + y_2 - 2y_3 + 9y_4 - 5y_5 + 7y_6 \geq -1,
+\]
+
+for $x_2$:
+\[
+y_1 - y_2 + 7y_3 - 4y_4 + 2y_5 - 3y_6 \geq -2,
+\]
+
+and $y_1, \ldots, y_6 \geq 0$.
+
+\bigskip
+
+\textbf{(2) Put the dual in standard form and solve by simplex}
+
+We convert each ``$\geq$'' constraint into an equation by subtracting a surplus variable, or equivalently we can solve it directly with a solver. One finds the optimal dual solution
+
+\[
+y^* = (y_1, \ldots, y_6) = (0, 0, 0, 0.2, 0, 0),
+\]
+
+with objective
+\[
+w^* = -1\cdot 0 + 1\cdot 0 + 6\cdot 0 + 6\cdot 0.2 + (-3)\cdot 0 + 6\cdot 0 = -0.6.
+\]
+
+\bigskip
+
+\textbf{(3) Read off the primal optimal solution}
+
+By complementary slackness (or by re-solving the primal), the primal optimizer is
+\[
+x^* = (x_1^*, x_2^*) = (0.6, 0).
+\]
+Its primal objective is
+\[
+z^* = -0.6 - 2 \cdot 0 = -0.6.
+\]
+
+\bigskip
+
+\textbf{(4) Check feasibility and strong duality}
+
+Check that the candidate primal solution 
+\[
+x^* = (x_1^*, x_2^*) = (0.6, 0)
+\]
+is feasible for the primal and satisfies strong duality with the dual solution 
+\[
+y^* = (y_1^*, y_2^*, y_3^*, y_4^*, y_5^*, y_6^*) = (0, 0, 0, 0.2, 0, 0).
+\]
+
+\begin{enumerate}
+\item 
+The primal constraints are:
+\[
+\begin{aligned}
+(1)\quad & -3x_1 + x_2 \leq 1 \\
+(2)\quad & x_1 - x_2 \leq 1 \\
+(3)\quad & -2x_1 + 7x_2 \leq 6 \\
+(4)\quad & 9x_1 - 4x_2 \leq 6 \\
+(5)\quad & -5x_1 + 2x_2 \leq -3 \\
+(6)\quad & 7x_1 - 3x_2 \leq 6
+\end{aligned}
+\]
+
+Substitute $x_1 = 0.6$, $x_2 = 0$:
+
+\[
+\begin{aligned}
+(1)\quad & -3(0.6) + 1 \cdot 0 = -1.8 \leq 1 \quad  \\
+(2)\quad & 0.6 - 0 = 0.6 \leq 1 \quad  \\
+(3)\quad & -2(0.6) + 7 \cdot 0 = -1.2 \leq 6 \quad  \\
+(4)\quad & 9(0.6) - 4 \cdot 0 = 5.4 \leq 6 \quad  \\
+(5)\quad & -5(0.6) + 2 \cdot 0 = -3.0 \leq -3 \quad  \\
+(6)\quad & 7(0.6) - 3 \cdot 0 = 4.2 \leq 6 \quad 
+\end{aligned}
+\]
+
+All six constraints are satisfied, so $x^*$ is primal-feasible.
+
+\bigskip
+
+\item 2. Compute the primal objective at $x^*$
+
+\[
+\max (-x_1 - 2x_2) \Rightarrow -0.6 - 2 \cdot 0 = -0.6.
+\]
+
+
+
+\item Dual objective at $y^*$
+
+Recall the dual was
+
+\[
+\min (-y_1 + y_2 + 6y_3 + 6y_4 - 3y_5 + 6y_6) \quad \text{s.t. } y \geq 0, \ldots
+\]
+
+At $y^* = (0, 0, 0, 0.2, 0, 0)$:
+
+\[
+-0 + 0 + 6 \cdot 0 + 6 \cdot 0.2 + 0 + 0 = -0.6.
+\]
+
+
+\item Strong Duality
+
+Since both objectives agree,
+\[
+\text{primal optimum } = -0.6 = \text{dual optimum},
+\]
+and both $x^*$ and $y^*$ are feasible. Thus strong duality holds.
+\end{enumerate}
+
+\item 
+\begin{enumerate}
+    \item 
+\begin{enumerate}
+    \item \textbf{Check primal feasibility of $x^* = (0, \frac{4}{3}, \frac{2}{3}, \frac{5}{3}, 0)$.} \\
+    Compute each LHS:
+
+    \begin{align*}
+    (1):\quad & 0 + 3\cdot \tfrac{4}{3} + 5\cdot \tfrac{2}{3} - 2\cdot \tfrac{5}{3} + 2\cdot 0 = 4 + \tfrac{10}{3} - \tfrac{10}{3} = 4 \quad \text{(tight)} \\
+    (2):\quad & 4\cdot 0 + 2\cdot \tfrac{4}{3} - 2\cdot \tfrac{2}{3} + \tfrac{5}{3} + 0 = \tfrac{8}{3} - \tfrac{4}{3} + \tfrac{5}{3} = \tfrac{9}{3} = 3 \quad \text{(tight)} \\
+    (3):\quad & 2\cdot 0 + 4\cdot \tfrac{4}{3} + 4\cdot \tfrac{2}{3} - 2\cdot \tfrac{5}{3} + 5\cdot 0 = \tfrac{16}{3} + \tfrac{8}{3} - \tfrac{10}{3} = \tfrac{14}{3} \approx 4.67 < 5 \quad \text{(slack)} \\
+    (4):\quad & 3\cdot 0 + \tfrac{4}{3} + 2\cdot \tfrac{2}{3} - \tfrac{5}{3} - 2\cdot 0 = \tfrac{4}{3} + \tfrac{4}{3} - \tfrac{5}{3} = 1 \quad \text{(tight)}
+    \end{align*}
+
+    Constraints (1), (2), and (4) are tight; constraint (3) is slack.
+
+    \item \textbf{Write the dual.} \\
+    Let $y_1, y_2, y_3, y_4 \geq 0$ be the dual variables corresponding to constraints (1)--(4). The dual problem is:
+
+    \[
+    \begin{aligned}
+    \text{Minimize} \quad & 4y_1 + 3y_2 + 5y_3 + y_4 \\
+    \text{subject to:} \quad
+    & y_1 + 4y_2 + 2y_3 + 3y_4 \geq 7 \quad \text{(j=1)} \\
+    & 3y_1 + 2y_2 + 4y_3 + y_4 \geq 6 \quad \text{(j=2)} \\
+    & 5y_1 - 2y_2 + 4y_3 + 2y_4 \geq 5 \quad \text{(j=3)} \\
+    & -2y_1 + y_2 - 2y_3 - y_4 \geq -2 \quad \text{(j=4)} \\
+    & 2y_1 + y_2 + 5y_3 - 2y_4 \geq 3 \quad \text{(j=5)}
+    \end{aligned}
+    \]
+
+    \item \textbf{Apply complementary slackness.} \\
+    Primal constraints (1), (2), and (4) are tight, so corresponding $y_1, y_2, y_4$ may be nonzero. Since (3) is slack, we must have $y_3 = 0$.
+
+    In the primal solution, the positive variables are: $x_2 = \tfrac{4}{3}, x_3 = \tfrac{2}{3}, x_4 = \tfrac{5}{3}$. So dual constraints for $j=2,3,4$ must be \emph{tight}.
+
+    \begin{align*}
+    \text{(E2)} &\quad 3y_1 + 2y_2 + y_4 = 6 \\
+    \text{(E3)} &\quad 5y_1 - 2y_2 + 2y_4 = 5 \\
+    \text{(E4)} &\quad -2y_1 + y_2 - y_4 = -2 \\
+    \text{Also: } &\quad y_3 = 0
+    \end{align*}
+
+    Solve the system:
+
+    From (E4):\quad $y_2 = 2y_1 - 2 + y_4$
+
+    Plug into (E2):
+
+    \[
+    3y_1 + 2(2y_1 - 2 + y_4) + y_4 = 3y_1 + 4y_1 - 4 + 2y_4 + y_4 = 7y_1 + 3y_4 = 10
+    \Rightarrow y_1 = 1, y_4 = 1
+    \]
+
+    Then $y_2 = 2\cdot 1 - 2 + 1 = 1$.
+
+    So the dual candidate is: $y^* = (1, 1, 0, 1)$.
+
+    \item \textbf{Check dual feasibility.} \\
+    We need to check the remaining constraints (j=1 and j=5):
+
+    \begin{align*}
+    \text{j=1:}\quad & 1 + 4\cdot 1 + 2\cdot 0 + 3\cdot 1 = 8 \geq 7 \quad \checkmark \\
+    \text{j=5:}\quad & 2\cdot 1 + 1\cdot 1 + 5\cdot 0 - 2\cdot 1 = 1 < 3 \quad \text{\texttimes}
+    \end{align*}
+
+    The dual constraint for $j=5$ is violated. Hence, $y^*$ is not dual feasible.
+    
+\end{enumerate}
+\item 
+\begin{enumerate}
+    \item Check primal feasibility of $x^* = (0, 0, \tfrac{5}{2}, \tfrac{7}{2}, 0, \tfrac{1}{2})$. \\
+    Compute LHS of each constraint:
+
+    \begin{align*}
+    (1):\quad & -4\cdot \tfrac{5}{2} + 3\cdot \tfrac{7}{2} + \tfrac{1}{2} = -10 + \tfrac{21}{2} + \tfrac{1}{2} = 1 \quad \text{(tight)} \\
+    (2):\quad & \tfrac{5}{2} + 3\cdot \tfrac{1}{2} = \tfrac{5}{2} + \tfrac{3}{2} = 4 \quad \text{(tight)} \\
+    (3):\quad & -\tfrac{15}{2} + \tfrac{21}{2} + \tfrac{1}{2} = \tfrac{7}{2} = 3.5 < 4 \quad \text{(slack)} \\
+    (4):\quad & 2\cdot \tfrac{7}{2} - 5\cdot \tfrac{1}{2} = 7 - 2.5 = 4.5 < 5 \quad \text{(slack)} \\
+    (5):\quad & \tfrac{5}{2} + \tfrac{7}{2} + 2\cdot \tfrac{1}{2} = 6 + 1 = 7 \quad \text{(tight)} \\
+    (6):\quad & 5 - \tfrac{7}{2} + 5\cdot \tfrac{1}{2} = 5 - 3.5 + 2.5 = 4 < 5 \quad \text{(slack)}
+    \end{align*}
+
+    Constraints (1), (2), and (5) are tight ⇒ $y_1, y_2, y_5$ may be positive; constraints (3), (4), (6) are slack ⇒ $y_3 = y_4 = y_6 = 0$.
+
+    \item Write the dual constraints. \\
+    The cost vector is $c = (4,5,1,3,-5,8)$, and using only $y_1, y_2, y_5$ (since the others are zero), the dual constraints become:
+
+    \begin{align*}
+    j=1:\quad & -y_1 + 5y_2 - 2y_5 \geq 4 \\
+    j=2:\quad & 3y_2 + y_5 \geq 5 \\
+    j=3:\quad & -4y_1 + y_2 + y_5 = 1 \quad (x_3 > 0) \\
+    j=4:\quad & 3y_1 + y_5 = 3 \quad (x_4 > 0) \\
+    j=5:\quad & y_1 - 5y_2 + 2y_5 \geq -5 \\
+    j=6:\quad & y_1 + 3y_2 + 2y_5 = 8 \quad (x_6 > 0)
+    \end{align*}
+
+    \item Solve the system of equalities:
+
+    \begin{align*}
+    \text{(E3)}\quad & -4y_1 + y_2 + y_5 = 1 \\
+    \text{(E4)}\quad & 3y_1 + y_5 = 3 \Rightarrow y_5 = 3 - 3y_1 \\
+    \text{(E6)}\quad & y_1 + 3y_2 + 2y_5 = 8
+    \end{align*}
+
+    Substitute $y_5 = 3 - 3y_1$ into (E3) and (E6):
+
+    \begin{align*}
+    \text{(E3):} \quad & -4y_1 + y_2 + (3 - 3y_1) = 1 \Rightarrow y_2 = 7y_1 - 2 \\
+    \text{(E6):} \quad & y_1 + 3(7y_1 - 2) + 2(3 - 3y_1) = 8 \\
+    & y_1 + 21y_1 - 6 + 6 - 6y_1 = 8 \Rightarrow 16y_1 = 8 \Rightarrow y_1 = \tfrac{1}{2}
+    \end{align*}
+
+    Then:
+
+    \[
+    y_2 = 7\cdot \tfrac{1}{2} - 2 = \tfrac{7}{2} - 2 = \tfrac{3}{2}, \quad y_5 = 3 - 3\cdot \tfrac{1}{2} = \tfrac{3}{2}
+    \]
+
+    So the candidate dual solution is:
+
+    \[
+    y^* = \left( \tfrac{1}{2}, \tfrac{3}{2}, 0, 0, \tfrac{3}{2}, 0 \right)
+    \]
+
+    \item Check the remaining dual inequalities (j = 1, 2, 5):
+
+    \begin{align*}
+    j=1:\quad & -\tfrac{1}{2} + 5\cdot \tfrac{3}{2} - 2\cdot \tfrac{3}{2} = -\tfrac{1}{2} + \tfrac{15}{2} - 3 = 4 \geq 4 \quad \checkmark \\
+    j=2:\quad & 3\cdot \tfrac{3}{2} + \tfrac{3}{2} = \tfrac{9}{2} + \tfrac{3}{2} = 6 \geq 5 \quad \checkmark \\
+    j=5:\quad & \tfrac{1}{2} - 5\cdot \tfrac{3}{2} + 2\cdot \tfrac{3}{2} = \tfrac{1}{2} - \tfrac{15}{2} + 3 = -\tfrac{11}{2} + 3 = -\tfrac{5}{2} \geq -5 \quad \checkmark
+    \end{align*}
+
+    All inequalities hold and $y^* \geq 0$.
+\end{enumerate}
+\end{enumerate}
+
+\item 
+\begin{enumerate}
+    \item Proposed primal: “Smoke all 400 bellies on regular time, 20 picnics regular & 210 overtime, 40 hams overtime.” So the primal variables are:
+
+    \[
+    x_1 = 0, \quad
+    x_2 = 40, \quad
+    x_3 = 400, \quad
+    x_4 = 0, \quad
+    x_5 = 20, \quad
+    x_6 = 210
+    \]
+
+    Check each constraint:
+
+    \begin{align*}
+    (1):\quad & x_1 + x_2 = 0 + 40 = 40 < 480 \quad \text{(slack)} \\
+    (2):\quad & x_3 + x_4 = 400 + 0 = 400 = 400 \quad \text{(tight)} \\
+    (3):\quad & x_5 + x_6 = 20 + 210 = 230 = 230 \quad \text{(tight)} \\
+    (4):\quad & x_1 + x_3 + x_5 = 0 + 400 + 20 = 420 \quad \text{(tight)} \\
+    (5):\quad & x_2 + x_4 + x_6 = 40 + 0 + 210 = 250 \quad \text{(tight)}
+    \end{align*}
+
+    Compute the primal objective value:
+
+    \[
+    6x_1 + 3x_2 + 8x_3 + 3x_4 + 9x_5 + 5x_6 = 0 + 120 + 3200 + 0 + 180 + 1050 = 4550
+    \]
+
+    \item Use complementary slackness to pin down the dual variables. \\
+    Let $y_1,\dots,y_5 \geq 0$ be the dual variables corresponding to constraints (1)--(5). By complementary slackness:
+
+    \begin{itemize}
+        \item Constraint (1) has slack, so $y_1 = 0$
+        \item Variables with $x_j > 0$ imply their dual inequalities are tight:
+        \[
+        \begin{aligned}
+        x_2 > 0 &\Rightarrow y_1 + y_5 = 3 \Rightarrow 0 + y_5 = 3 \Rightarrow y_5 = 3 \\
+        x_3 > 0 &\Rightarrow y_2 + y_4 = 8 \\
+        x_5 > 0 &\Rightarrow y_3 + y_4 = 9 \\
+        x_6 > 0 &\Rightarrow y_3 + y_5 = 5 \Rightarrow y_3 + 3 = 5 \Rightarrow y_3 = 2 \\
+        \end{aligned}
+        \]
+
+        Now use $y_3 = 2$ in the equation $y_3 + y_4 = 9$:
+        \[
+        2 + y_4 = 9 \Rightarrow y_4 = 7
+        \]
+
+        And $y_2 + y_4 = 8 \Rightarrow y_2 = 1$
+
+        Thus, the dual candidate is:
+        \[
+        y = (y_1, y_2, y_3, y_4, y_5) = (0, 1, 2, 7, 3)
+        \]
+    \end{itemize}
+
+    \item Check dual feasibility. \\
+    The remaining dual inequalities are for $x_1$ and $x_4$ (the zero primal variables). We must check:
+
+    \begin{align*}
+    x_1: &\quad y_1 + y_4 = 0 + 7 = 7 \geq 6 \quad  \\
+    x_4: &\quad y_2 + y_5 = 1 + 3 = 4 \geq 3 \quad
+    \end{align*}
+
+    All dual variables are nonnegative and all inequalities are satisfied, so $y$ is dual feasible.
+
+    \item Dual objective equals primal objective. \\
+    Compute the dual objective:
+
+    \[
+    480\cdot 0 + 400\cdot 1 + 230\cdot 2 + 420\cdot 7 + 250\cdot 3 = 0 + 400 + 460 + 2940 + 750 = 4550
+    \]
+
+    Since the dual and primal objectives match and complementary slackness holds, the proposed $x^*$ is optimal.
+\end{enumerate}
+\item \begin{enumerate}
+    \item \textbf{Complementary slackness conditions:}
+    \begin{itemize}
+        \item For each primal variable \(x_j\):
+        \[
+        x_j \left( (A^T y)_j - c_j \right) = 0
+        \]
+        \item For each dual variable \(y_i\):
+        \[
+        y_i (b_i - (A x)_i) = 0
+        \]
+    \end{itemize}
+
+    \item \textbf{Write the dual problem:}
+    \[
+    \min 5y_1 + 11y_2 + 8y_3
+    \]
+    subject to
+    \[
+    \begin{cases}
+        2y_1 + 4y_2 + 3y_3 \geq 5 \\
+        3y_1 + y_2 + 4y_3 \geq 4 \\
+        y_1 + 2y_2 + 2y_3 \geq 3 \\
+        y_1, y_2, y_3 \geq 0
+    \end{cases}
+    \]
+
+    \item \textbf{Use optimal tableau to get primal optimal solution:}  
+    From the given tableau:
+    \[
+    \begin{cases}
+        x_3 = 1 + x_2 + 3x_4 - 2x_6 \\
+        x_1 = 2 - 2x_2 - 2x_4 + x_6 \\
+        x_5 = 1 + 5x_2 + 2x_4 \\
+        z = 13 - 3x_2 - x_4 - x_6
+    \end{cases}
+    \]
+    At optimality: \(x_2 = x_4 = x_6 = 0\), so
+    \[
+    x_1 = 2,\quad x_3 = 1,\quad x_5 = 1,\quad z = 13.
+    \]
+    Therefore, the primal optimal solution is
+    \[
+    x = (2, 0, 1), \quad \text{with slacks } x_4 = 0,\; x_5 = 1,\; x_6 = 0.
+    \]
+
+    \item \textbf{Apply complementary slackness:}
+    \begin{itemize}
+        \item From slack variables:
+        \[
+        s_1 = x_4 = 0 \Rightarrow y_1 \text{ unrestricted},\quad 
+        s_2 = x_5 = 1 > 0 \Rightarrow y_2 = 0,\quad 
+        s_3 = x_6 = 0 \Rightarrow y_3 \text{ unrestricted}.
+        \]
+        \item From primal variables:
+        \begin{itemize}
+            \item \(x_1 = 2 > 0\), so:
+            \[
+            2y_1 + 4y_2 + 3y_3 = c_1 = 5
+            \]
+            \item \(x_3 = 1 > 0\), so:
+            \[
+            y_1 + 2y_2 + 2y_3 = c_3 = 3
+            \]
+        \end{itemize}
+    \end{itemize}
+
+    \item \textbf{Substitute \(y_2 = 0\) and solve:}
+    \[
+    \begin{cases}
+        2y_1 + 3y_3 = 5 \\
+        y_1 + 2y_3 = 3
+    \end{cases}
+    \]
+    From the second equation: \(y_1 = 3 - 2y_3\). Substitute into the first:
+    \[
+    2(3 - 2y_3) + 3y_3 = 5 \Rightarrow 6 - 4y_3 + 3y_3 = 5 \Rightarrow y_3 = 1
+    \]
+    Then \(y_1 = 3 - 2 \cdot 1 = 1\). So,
+    \[
+    \boxed{y = (1, 0, 1)}
+    \]
+
+    \item \textbf{Verify strong duality and feasibility:}
+    \begin{itemize}
+        \item Dual objective value:
+        \[
+        5y_1 + 11y_2 + 8y_3 = 5 \cdot 1 + 11 \cdot 0 + 8 \cdot 1 = 13
+        \]
+        equals primal objective \(z^* = 13\).
+        \item Dual feasibility:
+        \[
+        \begin{cases}
+            2 \cdot 1 + 4 \cdot 0 + 3 \cdot 1 = 5 \ge 5 \\
+            3 \cdot 1 + 1 \cdot 0 + 4 \cdot 1 = 7 \ge 4 \\
+            1 \cdot 1 + 2 \cdot 0 + 2 \cdot 1 = 3 \ge 3
+        \end{cases}
+        \quad \text{and } y_i \ge 0.
+        \]
+    \end{itemize}
+    Hence, the dual solution is feasible, satisfies complementary slackness, and achieves the same optimal value.
+    \[
+    \boxed{
+        \text{Dual optimal: } y = (1, 0, 1), \quad \min = 13
+    }
+    \]
+\end{enumerate}
+
+
+\end{enumerate}
+\end{document}

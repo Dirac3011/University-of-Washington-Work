@@ -1,0 +1,470 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 407 Homework \#3}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item 
+
+Phase I: Initial Tableau
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+a_1 & -1 & 1 & -1 & 0 & 0 & 1 & 0 & 1 \\
+a_2 & 1 & 1 & 0 & -1 & 0 & 0 & 1 & 3 \\
+s_3 & 2 & 1 & 0 & 0 & 1 & 0 & 0 & 2 \\
+\hline
+W & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 \\
+\end{array}
+\]
+
+Row 0 (W) update:
+\[
+W = a_1 + a_2 \implies \text{Row 0} - (\text{Row 1} + \text{Row 2})
+\]
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+a_1 & -1 & 1 & -1 & 0 & 0 & 1 & 0 & 1 \\
+a_2 & 1 & 1 & 0 & -1 & 0 & 0 & 1 & 3 \\
+s_3 & 2 & 1 & 0 & 0 & 1 & 0 & 0 & 2 \\
+\hline
+W & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 \\
+\end{array}
+\]
+\[
+\text{New } W: \quad (0-(-1+1)), (0-(1+1)), (0-(-1+0)), (0-(0+(-1))), (0-(0+0)), (1-(1+0)), (1-(0+1)), (0-(1+3))
+\]
+\[
+\Rightarrow W: 0, 0, 1, 1, 0, 0, 0, -4
+\]
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+a_1 & -1 & 1 & -1 & 0 & 0 & 1 & 0 & 1 \\
+a_2 & 1 & 1 & 0 & -1 & 0 & 0 & 1 & 3 \\
+s_3 & 2 & 1 & 0 & 0 & 1 & 0 & 0 & 2 \\
+\hline
+W & 0 & 0 & 1 & 1 & 0 & 0 & 0 & -4 \\
+\end{array}
+\]
+
+Pivot: Enter \( s_1 \), Leave \( a_1 \)
+
+Divide Row 1 by \(-1\):
+
+\[
+a_1 \to s_1: \quad s_1 = -x_1 + x_2 + a_1 = 1 \implies x_1 - x_2 - a_1 + s_1 = -1
+\]
+But for tableau, just divide Row 1 by \(-1\):
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+s_1 & 1 & -1 & 1 & 0 & 0 & -1 & 0 & -1 \\
+a_2 & 1 & 1 & 0 & -1 & 0 & 0 & 1 & 3 \\
+s_3 & 2 & 1 & 0 & 0 & 1 & 0 & 0 & 2 \\
+\hline
+W & 0 & 0 & 1 & 1 & 0 & 0 & 0 & -4 \\
+\end{array}
+\]
+
+Now, eliminate \( s_1 \) from other rows:
+
+- Row 2: no \( s_1 \)
+- Row 3: no \( s_1 \)
+- Row 0: subtract Row 1
+
+Row 0: \( W - 1 \times \text{Row 1} \):
+
+\[
+(0-1), (0-(-1)), (1-1), (1-0), (0-0), (0-(-1)), (0-0), (-4-(-1))
+\]
+\[
+\Rightarrow -1, 1, 0, 1, 0, 1, 0, -3
+\]
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+s_1 & 1 & -1 & 1 & 0 & 0 & -1 & 0 & -1 \\
+a_2 & 1 & 1 & 0 & -1 & 0 & 0 & 1 & 3 \\
+s_3 & 2 & 1 & 0 & 0 & 1 & 0 & 0 & 2 \\
+\hline
+W & -1 & 1 & 0 & 1 & 0 & 1 & 0 & -3 \\
+\end{array}
+\]
+
+Pivot: Enter \( x_2 \), Leave \( s_1 \)
+
+Minimum ratio test: Only Row 1 has negative \( x_2 \), so pivot on Row 1, \( x_2 \).
+
+Row 1: divide by \(-1\):
+
+\[
+s_1: x_1 - x_2 + s_1 - a_1 = -1 \implies x_2 = x_1 + s_1 - a_1 + 1
+\]
+
+But for tableau, divide Row 1 by \(-1\):
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+x_2 & -1 & 1 & -1 & 0 & 0 & 1 & 0 & 1 \\
+a_2 & 1 & 1 & 0 & -1 & 0 & 0 & 1 & 3 \\
+s_3 & 2 & 1 & 0 & 0 & 1 & 0 & 0 & 2 \\
+\hline
+W & -1 & 1 & 0 & 1 & 0 & 1 & 0 & -3 \\
+\end{array}
+\]
+
+Now, eliminate \( x_2 \) from other rows:
+
+Row 2: Row 2 - 1 × Row 1
+
+\[
+(1-(-1)), (1-1), (0-(-1)), (-1-0), (0-0), (0-1), (1-0), (3-1)
+\]
+\[
+2, 0, 1, -1, 0, -1, 1, 2
+\]
+
+Row 3: Row 3 - 1 × Row 1
+
+\[
+(2-(-1)), (1-1), (0-(-1)), (0-0), (1-0), (0-1), (0-0), (2-1)
+\]
+\[
+3, 0, 1, 0, 1, -1, 0, 1
+\]
+
+Row 0: Row 0 - 1 × Row 1
+
+\[
+(-1-(-1)), (1-1), (0-(-1)), (1-0), (0-0), (1-1), (0-0), (-3-1)
+\]
+\[
+0, 0, 1, 1, 0, 0, 0, -4
+\]
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+x_2 & -1 & 1 & -1 & 0 & 0 & 1 & 0 & 1 \\
+a_2 & 2 & 0 & 1 & -1 & 0 & -1 & 1 & 2 \\
+s_3 & 3 & 0 & 1 & 0 & 1 & -1 & 0 & 1 \\
+\hline
+W & 0 & 0 & 1 & 1 & 0 & 0 & 0 & -4 \\
+\end{array}
+\]
+
+Pivot: Enter \( s_1 \), Leave \( x_2 \)
+
+Row 1: divide by \(-1\):
+
+\[
+x_2: -x_1 + x_2 - s_1 + a_1 = 1 \implies s_1 = -x_1 + x_2 + a_1 - 1
+\]
+
+But for tableau, divide Row 1 by \(-1\):
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+s_1 & 1 & -1 & 1 & 0 & 0 & -1 & 0 & -1 \\
+a_2 & 2 & 0 & 1 & -1 & 0 & -1 & 1 & 2 \\
+s_3 & 3 & 0 & 1 & 0 & 1 & -1 & 0 & 1 \\
+\hline
+W & 0 & 0 & 1 & 1 & 0 & 0 & 0 & -4 \\
+\end{array}
+\]
+
+The artificial variables cannot be removed from the basis. This means the original problem is infeasible
+
+\item 
+
+Maximize:
+\[
+3x_1 + x_2
+\]
+
+Subject to:
+\[
+\begin{align*}
+x_1 - x_2 &\leq -1 \\
+-x_1 - x_2 &\leq -3 \\
+2x_1 - x_2 &\leq 2 \\
+x_1, x_2 &\geq 0
+\end{align*}
+\]
+
+First, we rewrite all constraints so that the right-hand side is non-negative:
+
+1. \( x_1 - x_2 \leq -1 \implies -x_1 + x_2 \geq 1 \)
+2. \( -x_1 - x_2 \leq -3 \implies x_1 + x_2 \geq 3 \)
+3. \( 2x_1 - x_2 \leq 2 \) (already in crrect form)
+
+Now, we write as equations with slack/surplus and artificial variables:
+
+1. \( -x_1 + x_2 - s_1 + a_1 = 1 \)
+2. \( x_1 + x_2 - s_2 + a_2 = 3 \)
+3. \( 2x_1 - x_2 + s_3 = 2 \)
+
+All variables \( x_1, x_2, s_1, s_2, s_3, a_1, a_2 \geq 0 \).
+
+
+Minimize \( W = a_1 + a_2 \).
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+a_1 & -1 & 1 & -1 & 0 & 0 & 1 & 0 & 1 \\
+a_2 & 1 & 1 & 0 & -1 & 0 & 0 & 1 & 3 \\
+s_3 & 2 & -1 & 0 & 0 & 1 & 0 & 0 & 2 \\
+\hline
+W & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 \\
+\end{array}
+\]
+
+Update \( W \) row by subtracting Row 1 and Row 2:
+
+\[
+W = a_1 + a_2 - (\text{Row 1} + \text{Row 2})
+\]
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+a_1 & -1 & 1 & -1 & 0 & 0 & 1 & 0 & 1 \\
+a_2 & 1 & 1 & 0 & -1 & 0 & 0 & 1 & 3 \\
+s_3 & 2 & -1 & 0 & 0 & 1 & 0 & 0 & 2 \\
+\hline
+W & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 0 \\
+\end{array}
+\]
+\[
+\text{New } W: (0-(-1+1)), (0-(1+1)), (0-(-1+0)), (0-(0+(-1))), (0-(0+0)), (1-(1+0)), (1-(0+1)), (0-(1+3))
+\]
+\[
+W: 0, -2, 1, 1, 0, 0, 0, -4
+\]
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+a_1 & -1 & 1 & -1 & 0 & 0 & 1 & 0 & 1 \\
+a_2 & 1 & 1 & 0 & -1 & 0 & 0 & 1 & 3 \\
+s_3 & 2 & -1 & 0 & 0 & 1 & 0 & 0 & 2 \\
+\hline
+W & 0 & -2 & 1 & 1 & 0 & 0 & 0 & -4 \\
+\end{array}
+\]
+
+ Pivot 1: Enter \( x_2 \), Leave \( a_1 \)
+
+- Row 1: \( 1/1 = 1 \)
+- Row 2: \( 3/1 = 3 \)
+- Row 3: \( 2/(-1) = -2 \)
+
+So, pivot on Row 1, \( x_2 \).
+
+Row 1 (new): divide by 1
+
+\[
+a_1: -1x_1 + 1x_2 - 1s_1 + 1a_1 = 1 \implies x_2 = x_1 + s_1 - a_1 + 1
+\]
+
+But for tableue, divide Row 1 by 1:
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+x_2 & -1 & 1 & -1 & 0 & 0 & 1 & 0 & 1 \\
+a_2 & 1 & 1 & 0 & -1 & 0 & 0 & 1 & 3 \\
+s_3 & 2 & -1 & 0 & 0 & 1 & 0 & 0 & 2 \\
+\hline
+W & 0 & -2 & 1 & 1 & 0 & 0 & 0 & -4 \\
+\end{array}
+\]
+
+Now, eliminate \( x_2 \) from other rows:
+
+- Row 2: Row 2 - 1 × Row 1
+- Row 3: Row 3 + 1 × Row 1
+- Row 0: Row 0 + 2 × Row 1
+
+Row 2: \( (1-(-1)), (1-1), (0-(-1)), (-1-0), (0-0), (0-1), (1-0), (3-1) \)  
+\( 2, 0, 1, -1, 0, -1, 1, 2 \)
+
+Row 3: \( (2+(-1)), (-1+1), (0+(-1)), (0+0), (1+0), (0+1), (0+0), (2+1) \)  
+\( 1, 0, -1, 0, 1, 1, 0, 3 \)
+
+Row 0: \( (0+2 \times -1), (-2+2 \times 1), (1+2 \times -1), (1+2 \times 0), (0+2 \times 0), (0+2 \times 1), (0+2 \times 0), (-4+2 \times 1) \)  
+\( -2, 0, -1, 1, 0, 2, 0, -2 \)
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+x_2 & -1 & 1 & -1 & 0 & 0 & 1 & 0 & 1 \\
+a_2 & 2 & 0 & 1 & -1 & 0 & -1 & 1 & 2 \\
+s_3 & 1 & 0 & -1 & 0 & 1 & 1 & 0 & 3 \\
+\hline
+W & -2 & 0 & -1 & 1 & 0 & 2 & 0 & -2 \\
+\end{array}
+\]
+
+
+ Pivot 2: Enter \( x_1 \), Leave \( s_3 \)
+
+Minimum ratio test:
+- Row 2: \( 2/2 = 1 \)
+- Row 3: \( 3/1 = 3 \)
+
+So, pivot on Row 3, \( x_1 \).
+
+Row 3: divide by 1
+
+\[
+s_3: x_1 - s_1 + a_1 = 3
+\]
+
+Now, eliminate \( x_1 \) from other rows:
+
+Row 1: Row 1 + 1 × Row 3  
+\( (-1+1), (1+0), (-1+(-1)), (0+0), (0+1), (1+1), (0+0), (1+3) \)  
+\( 0, 1, -2, 0, 1, 2, 0, 4 \)
+
+Row 2: Row 2 - 2 × Row 3  
+\( (2-2), (0-0), (1-(-2)), (-1-0), (0-2), (-1-2), (1-0), (2-6) \)  
+\( 0, 0, 3, -1, -2, -3, 1, -4 \)
+
+Row 0: Row 0 + 2 × Row 3  
+\( (-2+2), (0+0), (-1+(-2)), (1+0), (0+2), (2+2), (0+0), (-2+6) \)  
+\( 0, 0, -3, 1, 2, 4, 0, 4 \)
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+x_2 & 0 & 1 & -2 & 0 & 1 & 2 & 0 & 4 \\
+a_2 & 0 & 0 & 3 & -1 & -2 & -3 & 1 & -4 \\
+x_1 & 1 & 0 & -1 & 0 & 1 & 1 & 0 & 3 \\
+\hline
+W & 0 & 0 & -3 & 1 & 2 & 4 & 0 & 4 \\
+\end{array}
+\]
+
+
+ Pivot 3: Enter \( s_2 \), Leave \( a_2 \)
+
+Row 2: divide by \(-1\):
+
+\[
+a_2: 0x_1 + 0x_2 + 3s_1 - 1s_2 - 2s_3 - 3a_1 + 1a_2 = -4 \implies s_2 = (3s_1 - 2s_3 - 3a_1 + 1a_2 + 4)/1
+\]
+
+Row 2: divide by \(-1\):
+
+\( 0, 0, -3, 1, 2, 3, -1, 4 \)
+
+Now, eliminate \( s_2 \) from other rows:
+
+Row 1: Row 1 - 0 × Row 2 (no change)  
+Row 3: Row 3 - 0 × Row 2 (no change)  
+Row 0: Row 0 - 1 × Row 2
+
+Row 0: \( (0-0), (0-0), (-3-(-3)), (1-1), (2-2), (4-3), (0-(-1)), (4-4) \)  
+\( 0, 0, 0, 0, 0, 7, 1, 0 \)
+
+\[
+\begin{array}{c|ccccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & a_1 & a_2 & \text{RHS} \\
+\hline
+x_2 & 0 & 1 & -2 & 0 & 1 & 2 & 0 & 4 \\
+s_2 & 0 & 0 & -3 & 1 & 2 & 3 & -1 & 4 \\
+x_1 & 1 & 0 & -1 & 0 & 1 & 1 & 0 & 3 \\
+\hline
+W & 0 & 0 & 0 & 0 & 0 & 7 & 1 & 0 \\
+\end{array}
+\]
+
+All artificial variables are out of the basis and \( W = 0 \).
+
+Restore the original objective function:  
+Maximize \( 3x_1 + x_2 \).
+
+Set up the tableau with the current basis (\( x_1, x_2, s_2 \)):
+
+\[
+\begin{array}{c|cccccc|c}
+\text{BV} & x_1 & x_2 & s_1 & s_2 & s_3 & \text{RHS} \\
+\hline
+x_2 & 0 & 1 & -2 & 0 & 1 & 4 \\
+s_2 & 0 & 0 & -3 & 1 & 2 & 4 \\
+x_1 & 1 & 0 & -1 & 0 & 1 & 3 \\
+\hline
+Z & 3 & 1 & 0 & 0 & 0 & 0 \\
+\end{array}
+\]
+
+Express \( Z \) in terms of non-basic variables:
+
+\[
+Z = 3x_1 + x_2
+\]
+
+Substitute \( x_1 \) and \( x_2 \) from the tableau:
+
+- \( x_1 = 3 - s_1 + s_3 \)
+- \( x_2 = 4 + 2s_1 - s_3 \)
+
+Plug into \( Z \):
+
+\[
+Z = 3(3 - s_1 + s_3) + (4 + 2s_1 - s_3)
+= 9 - 3s_1 + 3s_3 + 4 + 2s_1 - s_3
+= 13 - s_1 + 2s_3
+\]
+
+Since \( s_1, s_3 \geq 0 \), the maximum occurs at \( s_1 = 0, s_3 = 0 \):
+
+\[
+Z_{\max} = 13
+\]
+\end{enumerate}
+\end{document}

@@ -1,0 +1,155 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 136 Homework \#8}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item 
+Let \( \mathbf{r} = x\mathbf{i} + y\mathbf{j} + z\mathbf{k} \) and \( r = \|\mathbf{r}\| = \sqrt{x^2 + y^2 + z^2} \). Let \( f \) be a scalar function of \( r \), so \( f(r) \) is a scalar field depending on \( x, y, z \) through \( r \).
+
+We want to compute the gradient:
+\[
+\nabla[f(r)] = \left\langle \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z} \right\rangle
+\]
+
+Using the chain rule:
+\[
+\frac{\partial f}{\partial x} = \frac{df}{dr} \cdot \frac{\partial r}{\partial x}
+\]
+
+Since \( r = \sqrt{x^2 + y^2 + z^2} \), we have:
+\[
+\frac{\partial r}{\partial x} = \frac{x}{\sqrt{x^2 + y^2 + z^2}} = \frac{x}{r}, \quad 
+\frac{\partial r}{\partial y} = \frac{y}{r}, \quad 
+\frac{\partial r}{\partial z} = \frac{z}{r}
+\]
+
+Therefore:
+\[
+\nabla[f(r)] = f'(r) \cdot \left\langle \frac{x}{r}, \frac{y}{r}, \frac{z}{r} \right\rangle = f'(r) \cdot \frac{\mathbf{r}}{r}
+\]
+
+Hence, we conclude:
+\[
+\boxed{\nabla[f(r)] = f'(r) \cdot \frac{\mathbf{r}}{r}} \quad \text{for } r \ne 0
+\]
+\item 
+Let \( u = u(x, y) \) be a function with continuous second partial derivatives. We want to show that
+
+\[
+\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = \frac{\partial^2 u}{\partial r^2} + \frac{1}{r} \frac{\partial u}{\partial r} + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2}.
+\]
+
+First, recall the transformations between Cartesian and polar coordinates:
+
+\[
+x = r \cos \theta, \quad y = r \sin \theta.
+\]
+
+We compute the partial derivatives of \( u \) using the chain rule:
+
+\[
+\frac{\partial u}{\partial x} = \frac{\partial u}{\partial r} \frac{\partial r}{\partial x} + \frac{\partial u}{\partial \theta} \frac{\partial \theta}{\partial x}, \quad
+\frac{\partial u}{\partial y} = \frac{\partial u}{\partial r} \frac{\partial r}{\partial y} + \frac{\partial u}{\partial \theta} \frac{\partial \theta}{\partial y}.
+\]
+
+We compute the derivatives:
+
+\[
+\frac{\partial r}{\partial x} = \frac{x}{\sqrt{x^2 + y^2}} = \cos \theta, \quad
+\frac{\partial r}{\partial y} = \frac{y}{\sqrt{x^2 + y^2}} = \sin \theta,
+\]
+
+\[
+\frac{\partial \theta}{\partial x} = -\frac{y}{x^2 + y^2} = -\frac{\sin \theta}{r}, \quad
+\frac{\partial \theta}{\partial y} = \frac{x}{x^2 + y^2} = \frac{\cos \theta}{r}.
+\]
+
+So,
+
+\[
+\frac{\partial u}{\partial x} = \frac{\partial u}{\partial r} \cos \theta - \frac{1}{r} \frac{\partial u}{\partial \theta} \sin \theta,
+\]
+\[
+\frac{\partial u}{\partial y} = \frac{\partial u}{\partial r} \sin \theta + \frac{1}{r} \frac{\partial u}{\partial \theta} \cos \theta.
+\]
+
+Now compute \( \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} \). Applying the product and chain rules:
+
+\[
+\frac{\partial^2 u}{\partial x^2} = \frac{\partial}{\partial x} \left( \frac{\partial u}{\partial r} \cos \theta - \frac{1}{r} \frac{\partial u}{\partial \theta} \sin \theta \right),
+\]
+
+\[
+\frac{\partial^2 u}{\partial y^2} = \frac{\partial}{\partial y} \left( \frac{\partial u}{\partial r} \sin \theta + \frac{1}{r} \frac{\partial u}{\partial \theta} \cos \theta \right).
+\]
+
+
+\[
+\nabla^2 u = \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} = \frac{\partial^2 u}{\partial r^2} + \frac{1}{r} \frac{\partial u}{\partial r} + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2}.
+\]
+
+Thus, the Laplacian in polar coordinates is given by:
+
+\[
+\boxed{
+\frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2}
+=
+\frac{\partial^2 u}{\partial r^2} + \frac{1}{r} \frac{\partial u}{\partial r} + \frac{1}{r^2} \frac{\partial^2 u}{\partial \theta^2}.
+}
+\]
+
+\item Let \( x = (x_1, x_2) \in \mathbb{R}^2 \), \( h = (h_1, h_2) \in \mathbb{R}^2 \), and define the function
+\[
+g(t) = f(x + th) = f(x_1 + th_1, x_2 + th_2).
+\]
+
+To compute \( g'(t) \), we apply the chain rule for multivariable functions:
+\[
+g'(t) = \frac{d}{dt} f(x_1 + t h_1, x_2 + t h_2)
+= \frac{\partial f}{\partial x_1}(x + th) \cdot h_1 + \frac{\partial f}{\partial x_2}(x + th) \cdot h_2.
+\]
+
+In vector notation, this can be written as:
+\[
+g'(t) = \nabla f(x + th) \cdot h.
+\]
+
+Next, to compute \( g''(t) \), we differentiate \( g'(t) \) with respect to \( t \):
+\[
+g''(t) = \frac{d}{dt} \left( \frac{\partial f}{\partial x_1}(x + th) \cdot h_1 + \frac{\partial f}{\partial x_2}(x + th) \cdot h_2 \right).
+\]
+
+Using the chain rule again:
+\[
+g''(t) = h_1 \left( \frac{\partial^2 f}{\partial x_1^2}(x + th) \cdot h_1 + \frac{\partial^2 f}{\partial x_1 \partial x_2}(x + th) \cdot h_2 \right)
++ h_2 \left( \frac{\partial^2 f}{\partial x_2 \partial x_1}(x + th) \cdot h_1 + \frac{\partial^2 f}{\partial x_2^2}(x + th) \cdot h_2 \right).
+\]
+
+Grouping terms, we get:
+\[
+g''(t) = h_1^2 \frac{\partial^2 f}{\partial x_1^2}(x + th) + 2h_1 h_2 \frac{\partial^2 f}{\partial x_1 \partial x_2}(x + th) + h_2^2 \frac{\partial^2 f}{\partial x_2^2}(x + th).
+\]
+\end{enumerate}
+\end{document}
