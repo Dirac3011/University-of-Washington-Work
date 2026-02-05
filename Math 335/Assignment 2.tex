@@ -1,0 +1,293 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 335 Homework \#1}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+
+\item 
+\begin{enumerate}
+\item[(a)]
+Consider
+\[
+\sum_{n=0}^{\infty} x^n \cos(n\theta), \qquad |x|<1.
+\]
+We have
+\[
+\left| x^n \cos(n\theta) \right| \le |x|^n
+\]
+for all $\theta \in \mathbb{R}$. Since
+\[
+\sum_{n=0}^{\infty} |x|^n
+\]
+converges for $|x|<1$, the comparison test implies that
+\[
+\sum_{n=0}^{\infty} x^n \cos(n\theta)
+\]
+converges absolutely.
+
+\item[(b)]
+Consider
+\[
+\sum_{n=1}^{\infty} n^{-2} \sin(n\theta).
+\]
+We have
+\[
+\left| n^{-2} \sin(n\theta) \right| \le n^{-2}
+\]
+for all $\theta \in \mathbb{R}$. Since
+\[
+\sum_{n=1}^{\infty} n^{-2}
+\]
+converges, the comparison test shows that the given series converges absolutely.
+\end{enumerate}
+
+\item
+Suppose $\sum a_n$ is conditionally convergent. Then
+\[
+\sum_{a_n>0} a_n = +\infty
+\quad \text{and} \quad
+\sum_{a_n<0} a_n = -\infty.
+\]
+We can construct a rearrangement by taking enough positive terms so that the partial sum exceeds any arbritary $M>0$, then adding one negative term, and repeating. The resulting partial sums diverge to $+\infty$.
+
+Similarly, by taking enough negative terms to make partial sums less than $-M$ before adding one positive term, one can construct a rearrangement whose partial sums diverge to $-\infty$.
+
+\item
+Consider the rearrangement
+\[
+1+\frac13-\frac12+\frac15+\frac17-\frac14+\frac19+\frac1{11}-\frac16+\cdots
+\]
+Group terms as
+\[
+\left(\frac{1}{2k-1}+\frac{1}{2k+1}-\frac{1}{2k}\right), \qquad k\ge1.
+\]
+Then
+\[
+\sum_{k=1}^{\infty}
+\left(\frac{1}{2k-1}+\frac{1}{2k+1}-\frac{1}{2k}\right)
+=
+\sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{n}
++
+\sum_{k=1}^{\infty}
+\left(\frac{1}{2k+1}-\frac{1}{2k}\right).
+\]
+The first sum equals $\log 2$. The second sum equals
+\[
+\frac12 \sum_{n=1}^{\infty}\frac{(-1)^{n-1}}{n}
+= \frac12 \log 2.
+\]
+Hence the sum of the rearranged series is
+\[
+\log 2 + \frac12 \log 2 = \frac32 \log 2.
+\]
+
+
+
+\item
+Consider
+\[
+\sum_{n=0}^{\infty} \frac{(x+2)^n}{n^2+1}.
+\]
+Using the root test,
+\[
+\limsup_{n\to\infty} \sqrt[n]{\left|\frac{(x+2)^n}{n^2+1}\right|}
+= |x+2|.
+\]
+Thus the series converges absolutely for $|x+2|<1$, i.e.\ $-3<x<-1$.
+At $x=-3$ and $x=-1$, the series reduces to
+\[
+\sum \frac{(-1)^n}{n^2+1} \quad \text{and} \quad \sum \frac{1}{n^2+1},
+\]
+both of which converge absolutely. We know this by comparing to $\sum \frac{1}{n^2}$ . Hence the series converges absolutely for
+\[
+-3 \le x \le -1.
+\]
+
+\item
+Consider
+\[
+\sum_{n=1}^{\infty} n^3(2x-1)^n.
+\]
+By the root test,
+\[
+\limsup_{n\to\infty} \sqrt[n]{|n^3(2x-1)^n|}
+= |2x-1|.
+\]
+Thus the series converges absolutely if $|2x-1|<1$, i.e.\ $0<x<1$.
+At $x=0$ or $x=1$, the terms behave like $n^3$, so the series diverges.
+Hence the series converges absolutely for
+\[
+0<x<1.
+\]
+
+\item
+Consider
+\[
+\sum_{n=1}^{\infty} \frac{n x^{n+2}}{5^n (n+1)^2}.
+\]
+Rewrite as
+\[
+x^2 \sum_{n=1}^{\infty} \frac{n}{(n+1)^2}\left(\frac{x}{5}\right)^n.
+\]
+Since $\frac{n}{(n+1)^2} \sim \frac{1}{n}$, the series behaves like
+\[
+\sum \frac{1}{n}\left(\frac{x}{5}\right)^n.
+\]
+Thus it converges absolutely for $|x|<5$.
+At $x=\pm 5$, the series reduces to a harmonic-type series and diverges.
+Hence convergence is absolute for
+\[
+|x|<5.
+\]
+
+\item
+Consider
+\[
+\sum_{n=1}^{\infty} \frac{1}{\sqrt{n}}\left(\frac{x-1}{x+1}\right)^n.
+\]
+Let $r=\left|\frac{x-1}{x+1}\right|$.
+If $r<1$, the series converges absolutely by comparison with a geometric series.
+If $r=1$, then the terms behave like $1/\sqrt{n}$, so the series diverges.
+Solving $r<1$ gives $x>0$.
+Hence the series converges absolutely for
+\[
+x>0,
+\]
+and diverges for $x\le 0$.
+
+\item
+Consider
+\[
+\sum_{n=0}^{\infty} \frac{(-1)^n (x+1)^{2n}}{3n+2}.
+\]
+If $|x+1|<1$, then the series converges absolutely by comparison with a geometric series.
+If $|x+1|=1$, the series becomes
+\[
+\sum \frac{(-1)^n}{3n+2},
+\]
+which converges conditionally by the alternating series test.
+If $|x+1|>1$, the terms do not tend to zero.
+Hence the series converges absolutely for $|x+1|<1$ and conditionally for $|x+1|=1$.
+
+\item
+Consider
+\[
+\sum_{n=2}^{\infty} (-1)^n \log\!\left(\frac{n+1}{n}\right).
+\]
+Since
+\[
+\log\!\left(\frac{n+1}{n}\right) \sim \frac{1}{n},
+\]
+the series converges by the alternating series test.
+However,
+\[
+\sum \left|\log\!\left(\frac{n+1}{n}\right)\right|
+\]
+diverges by comparison with the harmonic series.
+Hence the series converges conditionally.
+
+\item
+Consider
+\[
+\sum_{n=1}^{\infty} (-1)^{n-1} \log(n\sin n^{-1}).
+\]
+As $n\to\infty$,
+\[
+\sin n^{-1} \sim n^{-1},
+\quad \text{so} \quad
+n\sin n^{-1} \to 1,
+\]
+and
+\[
+\log(n\sin n^{-1}) \to 0.
+\]
+Moreover, the terms decrease to zero in magnitude.
+Thus the series converges by the alternating series test.
+Since the absolute values do not form a convergent series, the convergence is conditional.
+
+\item
+Suppose $\sum a_n$ converges. Let $p>0$. Since $n^{-p}\to0$ and is decreasing, and the partial sums of $\sum a_n$ are bounded, Dirichlet's test implies that
+\[
+\sum n^{-p} a_n
+\]
+converges.
+Absolute convergence cannot be guaranteed for any $p>0$ without additional assumptions on $a_n$.
+
+\item
+For $|x|<1$ we have the geometric series
+\[
+\sum_{n=0}^\infty x^n = \frac{1}{1-x}.
+\]
+Differentiate both sides with respect to $x$:
+\[
+\sum_{n=1}^\infty n x^{n-1} = \frac{1}{(1-x)^2}.
+\]
+Multiplying by $x$ gives
+\[
+\sum_{n=1}^\infty n x^n = \frac{x}{(1-x)^2}.
+\]
+Adding $\sum_{n=0}^\infty x^n = \frac{1}{1-x}$ to both sides yields
+\[
+\sum_{n=0}^\infty (n+1)x^n = \frac{1}{(1-x)^2}.
+\]
+
+\item
+Assume $\sum_{m,n=1}^\infty (m+n)^{-p}$ converges. Then in particular the terms must tend to zero fast enough. Group terms with $m+n=k$; there are $k-1$ such pairs, so
+\[
+\sum_{m,n=1}^\infty (m+n)^{-p}
+= \sum_{k=2}^\infty (k-1)k^{-p}.
+\]
+For large $k$, $(k-1)k^{-p}\sim k^{1-p}$, so convergence implies $p>2$. Conversely, if $p>2$, then
+\[
+\sum_{k=2}^\infty (k-1)k^{-p} \le \sum_{k=2}^\infty k^{1-p}
+\]
+which converges since $1-p<-1$. Hence $\sum_{m,n=1}^\infty (m+n)^{-p}$ converges if and only if $p>2$.
+
+\item
+Here $a_{mn}=1$ if $m=n$, $a_{mn}=-1$ if $m-n=1$, and $a_{mn}=0$ otherwise. First consider
+\[
+\sum_{n=0}^\infty \sum_{m=0}^\infty a_{mn}.
+\]
+For fixed $n$, only $m=n$ and $m=n+1$ contribute, so
+\[
+\sum_{m=0}^\infty a_{mn} = 1-1=0,
+\]
+hence
+\[
+\sum_{n=0}^\infty \sum_{m=0}^\infty a_{mn}=0.
+\]
+Now reverse the order:
+\[
+\sum_{m=0}^\infty \sum_{n=0}^\infty a_{mn}.
+\]
+For $m=0$, the inner sum is $1$. For $m\ge1$, the inner sum is $1-1=0$. Thus
+\[
+\sum_{m=0}^\infty \sum_{n=0}^\infty a_{mn}=1.
+\]
+Both iterated series converge, but their sums are different.
+
+\end{enumerate}
+
+\end{document}

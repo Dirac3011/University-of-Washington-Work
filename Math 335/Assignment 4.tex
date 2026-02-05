@@ -1,0 +1,494 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 335 Homework \#4}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+
+\begin{enumerate}
+\item
+\begin{enumerate}
+
+\item
+Let $\{a_n\}_{n=0}^\infty$ be a sequence with $\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|=L$.
+Consider the power series $\sum_{n=0}^\infty a_n x^n$.
+For $x\neq 0$,
+\[
+\left|\frac{a_{n+1}x^{n+1}}{a_n x^n}\right|
+= |x|\left|\frac{a_{n+1}}{a_n}\right|.
+\]
+Taking limits gives
+\[
+\lim_{n\to\infty}\left|\frac{a_{n+1}x^{n+1}}{a_n x^n}\right|
+= |x|L.
+\]
+By the ratio test, the series converges if $|x|L<1$ and diverges if $|x|L>1$.
+Hence the radius of convergence is $R=L^{-1}$.
+
+\item
+Assume that $\lim_{n\to\infty} |a_n|^{1/n}=L$.
+Consider the power series $\sum_{n=0}^\infty a_n x^n$.
+For each $n$,
+\[
+|a_n x^n|^{1/n} = |a_n|^{1/n}\,|x|.
+\]
+Taking limits as $n\to\infty$ gives
+\[
+\lim_{n\to\infty} |a_n x^n|^{1/n} = L|x|.
+\]
+By the root test, the series converges if $L|x|<1$ and diverges if $L|x|>1$.
+Therefore the radius of convergence is $R=L^{-1}$
+
+\end{enumerate}
+\item
+Assume $\{a_n\}$ is bounded, so there exists $M>0$ such that $|a_n|\le M$ for all $n$.
+For $|x|<1$,
+\[
+|a_n x^n|\le M|x|^n.
+\]
+The series $\sum_{n=0}^\infty M|x|^n$ converges since it is geometric with ratio $|x|<1$.
+By comparison, $\sum_{n=0}^\infty a_n x^n$ converges absolutely for all $|x|<1$.
+Therefore the radius of convergence is at least $1$.
+
+
+\item
+Consider
+\[
+f(x)=\int_0^x e^{-t^2}\,dt.
+\]
+The exponential function has the power series
+\[
+e^{-t^2}=\sum_{n=0}^\infty \frac{(-1)^n t^{2n}}{n!},
+\]
+which converges for all $t$.
+Integrating term-by-term on any bounded interval,
+\[
+f(x)=\sum_{n=0}^\infty \frac{(-1)^n}{n!}\int_0^x t^{2n}\,dt
+=\sum_{n=0}^\infty \frac{(-1)^n}{(2n+1)n!}x^{2n+1}.
+\]
+Since the original series for $e^{-t^2}$ has infinite radius of convergence, the integrated series also converges for all $x$.
+Thus the interval of validity is $(-\infty,\infty)$.
+
+\item
+Using the expansion from the previous item,
+\[
+\int_0^1 e^{-t^2}\,dt
+=\sum_{n=0}^\infty \frac{(-1)^n}{(2n+1)n!}.
+\]
+The series is alternating with terms decreasing to $0$.
+Approximating by the first four terms,
+\[
+1-\frac{1}{3}+\frac{1}{10}-\frac{1}{42}\approx 0.747.
+\]
+The estimate shows the error is bounded by the next term,
+\[
+\frac{1}{216}\approx 0.0046,
+\]
+so the value is $0.747$ correct to three decimal places.
+
+\item
+Let $f(x)=\sum_{n=0}^\infty a_n x^n$ with positive radius of convergence.
+If $a_n=0$ for all odd $n$, then
+\[
+f(-x)=\sum_{n=0}^\infty a_n(-x)^n=\sum_{n=0}^\infty a_n x^n=f(x),
+\]
+so $f$ is even.
+Conversely, if $f(-x)=f(x)$ for all $x$ in the interval of convergence, then
+\[
+\sum_{n=0}^\infty a_n((-1)^n-1)x^n=0
+\]
+for all such $x$, which implies $a_n=0$ for all odd $n$.
+A similar argument shows that $f(-x)=-f(x)$ if and only if $a_n=0$ for all even $n$.
+\item
+\begin{enumerate}
+    \item We verify that the series for $J_k(x)$ converges for all $x$ using the Ratio Test. Let $a_n = \frac{(-1)^n}{n!(n+k)!} \left(\frac{x}{2}\right)^{2n+k}$. We compute the limit of the absolute ratio:
+\[
+\lim_{n \to \infty} \left| \frac{a_{n+1}}{a_n} \right| = \lim_{n \to \infty} \left| \frac{\frac{(-1)^{n+1}}{(n+1)!(n+k+1)!} \left(\frac{x}{2}\right)^{2n+k+2}}{\frac{(-1)^n}{n!(n+k)!} \left(\frac{x}{2}\right)^{2n+k}} \right|
+\]
+Simplifying the terms:
+\[
+= \lim_{n \to \infty} \left| \frac{n!}{(n+1)!} \cdot \frac{(n+k)!}{(n+k+1)!} \cdot \frac{x^2}{4} \right| = \frac{x^2}{4} \lim_{n \to \infty} \frac{1}{(n+1)(n+k+1)} = 0
+\]
+Since the limit is $0$ for any $x$, the series converges for all $x$.
+
+\item We show that $\frac{d}{dx}[x^k J_k(x)] = x^k J_{k-1}(x)$. Multiplying $J_k(x)$ by $x^k$:
+\[
+x^k J_k(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{n!(n+k)!} \frac{x^{2n+2k}}{2^{2n+k}}
+\]
+Differentiating term-by-term:
+\[
+\frac{d}{dx}[x^k J_k(x)] = \sum_{n=0}^{\infty} \frac{(-1)^n(2n+2k)}{n!(n+k)!} \frac{x^{2n+2k-1}}{2^{2n+k}}
+\]
+Since $2n+2k = 2(n+k)$, we cancel $(n+k)$ in the denominator and one power of $2$:
+\[
+= \sum_{n=0}^{\infty} \frac{(-1)^n}{n!(n+k-1)!} \frac{x^{2n+2k-1}}{2^{2n+k-1}} = x^k \sum_{n=0}^{\infty} \frac{(-1)^n}{n!(n+k-1)!} \left(\frac{x}{2}\right)^{2n+k-1} = x^k J_{k-1}(x)
+\]
+
+\item We show that $\frac{d}{dx}[x^{-k} J_k(x)] = -x^{-k} J_{k+1}(x)$. Multiplying $J_k(x)$ by $x^{-k}$:
+\[
+x^{-k} J_k(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{n!(n+k)!} \frac{x^{2n}}{2^{2n+k}}
+\]
+Differentiating term-by-term (the $n=0$ term is constant and becomes $0$):
+\[
+\frac{d}{dx}[x^{-k} J_k(x)] = \sum_{n=1}^{\infty} \frac{(-1)^n(2n)}{n!(n+k)!} \frac{x^{2n-1}}{2^{2n+k}}
+\]
+Using $2n/n! = 2/(n-1)!$ and letting $m = n-1$:
+\[
+= \sum_{m=0}^{\infty} \frac{(-1)^{m+1}}{m!(m+k+1)!} \frac{x^{2m+1}}{2^{2m+k+1}} = -x^{-k} \sum_{m=0}^{\infty} \frac{(-1)^m}{m!(m+k+1)!} \left(\frac{x}{2}\right)^{2m+k+1} = -x^{-k} J_{k+1}(x)
+\]
+
+\item We verify that $u = J_k(x)$ satisfies $x^2 u'' + xu' + (x^2 - k^2)u = 0$. From (b) and (c), applying the product rule and simplifying, we get the recurrence relations:
+\[
+x J_k' + k J_k = x J_{k-1} \quad \text{and} \quad x J_k' - k J_k = -x J_{k+1}
+\]
+Subtracting these gives $2k J_k = x(J_{k-1} + J_{k+1})$, and differentiating the first relation yields:
+\[
+x J_k'' + J_k' + k J_k' = J_{k-1} + x J_{k-1}'
+\]
+Substituting the known identities for $J'$ into this expression and multiplying by $x$ allows us to collect terms:
+\[
+x^2 J_k'' + x J_k' + (x^2 - k^2) J_k = 0
+\]
+This confirms that the Bessel function of order $k$ is indeed a solution to the differential equation.
+\end{enumerate}
+\item We evaluate the sum $S = \sum_{n=1}^{\infty} \frac{nx^n}{(n+1)!}$. We use $n = (n+1) - 1$ to split the series into two parts that resemble the Taylor series for $e^x$:
+\[
+S = \sum_{n=1}^{\infty} \frac{(n+1)x^n}{(n+1)!} - \sum_{n=1}^{\infty} \frac{x^n}{(n+1)!}
+\]
+Simplifying the first term by canceling $(n+1)$ and adjusting the second term by multiplying and dividing by $x$:
+\[
+S = \sum_{n=1}^{\infty} \frac{x^n}{n!} - \frac{1}{x} \sum_{n=1}^{\infty} \frac{x^{n+1}}{(n+1)!}
+\]
+The first sum is $e^x - 1$. For the second sum, let $k = n+1$; the limits change from $n=1$ to $k=2$:
+\[
+S = (e^x - 1) - \frac{1}{x} \sum_{k=2}^{\infty} \frac{x^k}{k!} = (e^x - 1) - \frac{e^x - 1 - x}{x}
+\]
+Finding a common denominator:
+\[
+S = \frac{x(e^x - 1) - (e^x - 1 - x)}{x} = \frac{xe^x - x - e^x + 1 + x}{x} = \frac{(x-1)e^x + 1}{x}
+\]
+
+\item We evaluate the sum $S = \sum_{n=0}^{\infty} \frac{(-1)^n(2n+1)x^{2n}}{(2n)!}$. We distribute $(2n+1)$ to separate the terms:
+\[
+S = \sum_{n=0}^{\infty} \frac{(-1)^n(2n)x^{2n}}{(2n)!} + \sum_{n=0}^{\infty} \frac{(-1)^nx^{2n}}{(2n)!}
+\]
+The second sum is the standard power series for $\cos(x)$. In the first sum, the $n=0$ term is zero, and for $n \ge 1$, we simplify the factorial using $(2n)! = 2n \cdot (2n-1)!$:
+\[
+S = \sum_{n=1}^{\infty} \frac{(-1)^n x^{2n}}{(2n-1)!} + \cos(x)
+\]
+To relate the first term to $\sin(x)$, we factor out $-x$:
+\[
+S = -x \sum_{n=1}^{\infty} \frac{(-1)^{n-1} x^{2n-1}}{(2n-1)!} + \cos(x)
+\]
+Recognizing the power series $\sin(x) = \sum_{n=1}^{\infty} \frac{(-1)^{n-1} x^{2n-1}}{(2n-1)!}$, we substitute:
+\[
+S = -x\sin(x) + \cos(x)
+\]
+
+
+\item
+For $x>0$,
+\[
+\int_0^\infty e^{-xt}\,dt
+= \left[-\frac{1}{x}e^{-xt}\right]_0^\infty
+= \frac{1}{x}.
+\]
+For $x\ge a>0$,
+\[
+\left|\frac{\partial}{\partial x}e^{-xt}\right|
+= t e^{-xt}\le t e^{-at},
+\]
+which is integrable on $[0,\infty)$, so differentiation under the integral sign is justified.
+Let
+\[
+F(x)=\int_0^\infty e^{-xt}\,dt=x^{-1}.
+\]
+Differentiating $n$ times,
+\[
+F^{(n)}(x)=(-1)^n n! x^{-n-1}.
+\]
+Since
+\[
+F^{(n)}(x)=\int_0^\infty (-t)^n e^{-xt}\,dt,
+\]
+we obtain
+\[
+\int_0^\infty t^n e^{-xt}\,dt = n! x^{-n-1}.
+\]
+
+\item
+Let
+\[
+I(a,b)=\int_0^\infty \frac{e^{-bx}-e^{-ax}}{x}\,dx.
+\]
+Differentiating with respect to $a$,
+\[
+\frac{\partial I}{\partial a}
+=\int_0^\infty e^{-ax}\,dx=\frac{1}{a}.
+\]
+Thus $I(a,b)=\log a + C(b)$.
+Since $I(b,b)=0$, we have $C(b)=-\log b$.
+Therefore,
+\[
+\int_0^\infty \frac{e^{-bx}-e^{-ax}}{x}\,dx
+= \log\frac{a}{b}.
+\]
+
+\item
+For $x\in\mathbb R$, define
+\[
+F(x)=\int_0^\infty \frac{\sin(xt)}{t}\,dt.
+\]
+
+Fix a compact interval $I\subset\mathbb R$ with $0\notin I$. Then there exists $\delta>0$ such that $|x|\ge\delta$ for all $x\in I$.
+For $R>0$, integrate by parts:
+\[
+\int_0^R \frac{\sin(xt)}{t}\,dt
+= \left[-\frac{\cos(xt)}{x t}\right]_0^R
+- \int_0^R \frac{\cos(xt)}{x t^2}\,dt.
+\]
+The boundary term satisfies
+\[
+\left|\frac{\cos(xR)}{xR}\right|\le \frac{1}{\delta R},
+\]
+which tends to $0$ uniformly for $x\in I$ as $R\to\infty$.
+Moreover,
+\[
+\left|\int_0^R \frac{\cos(xt)}{x t^2}\,dt\right|
+\le \frac{1}{\delta}\int_0^\infty \frac{dt}{t^2}<\infty,
+\]
+so the improper integral converges uniformly on $I$.
+Hence $F(x)$ exists and the convergence is uniform on any compact interval not containing $0$.
+
+\[
+\int_0^\infty \frac{\sin(xt)}{t}\,dt=
+\begin{cases}
+\frac{\pi}{2}, & x>0,\\
+0, & x=0,\\
+-\frac{\pi}{2}, & x<0.
+\end{cases}
+\]
+
+The convergence is not uniform on any interval containing $0$, since the integral does not converge pointwise continuously at $x=0$.
+
+
+\item
+For $x>0$, define
+\[
+I(x)=\int_0^\infty \frac{\sin^2(xt)}{t^2}\,dt.
+\]
+Using the identity
+\[
+\sin^2(xt)=\frac12(1-\cos(2xt)),
+\]
+we write
+\[
+I(x)=\frac12\int_0^\infty \frac{1-\cos(2xt)}{t^2}\,dt.
+\]
+
+Integrate by parts with
+\[
+u=1-\cos(2xt), \qquad dv=\frac{dt}{t^2},
+\]
+so that
+\[
+du=2x\sin(2xt)\,dt, \qquad v=-\frac{1}{t}.
+\]
+Then
+\[
+\int_0^\infty \frac{1-\cos(2xt)}{t^2}\,dt
+=\left[-\frac{1-\cos(2xt)}{t}\right]_0^\infty
++2x\int_0^\infty \frac{\sin(2xt)}{t}\,dt.
+\]
+
+The boundary terms vanish since
+\[
+\frac{1-\cos(2xt)}{t}\to 0 \quad \text{as } t\to 0,\infty.
+\]
+Thus
+\[
+I(x)=x\int_0^\infty \frac{\sin(2xt)}{t}\,dt.
+\]
+
+By Exercise 8, since $x>0$,
+\[
+\int_0^\infty \frac{\sin(2xt)}{t}\,dt=\frac{\pi}{2}.
+\]
+Therefore,
+\[
+\int_0^\infty \frac{\sin^2(xt)}{t^2}\,dt=\frac{\pi}{2}x,
+\]
+
+\item
+Let
+\[
+F(x)=\int_0^\infty e^{-t^2}\cos(xt)\,dt,\qquad x\in\mathbb R.
+\]
+
+We justify differentiation under the integral sign. For all $x$ and $t\ge0$,
+\[
+\frac{\partial}{\partial x}\big(e^{-t^2}\cos(xt)\big)
+=-t e^{-t^2}\sin(xt),
+\]
+and
+\[
+\left|t e^{-t^2}\sin(xt)\right|\le t e^{-t^2}.
+\]
+Since
+\[
+\int_0^\infty t e^{-t^2}\,dt=\frac12<\infty,
+\]
+$F$ is differentiable and
+\[
+F'(x)=-\int_0^\infty t e^{-t^2}\sin(xt)\,dt.
+\]
+
+To compute $F'(x)$, integrate by parts with
+\[
+u=\sin(xt), \qquad dv=t e^{-t^2}\,dt.
+\]
+Then
+\[
+du=x\cos(xt)\,dt, \qquad v=-\frac12 e^{-t^2}.
+\]
+Hence
+\[
+\int_0^\infty t e^{-t^2}\sin(xt)\,dt
+=\left[-\frac12 e^{-t^2}\sin(xt)\right]_0^\infty
++\frac{x}{2}\int_0^\infty e^{-t^2}\cos(xt)\,dt.
+\]
+The boundary term vanishes since $e^{-t^2}\to0$ as $t\to\infty$ and $\sin(0)=0$.
+Therefore,
+\[
+F'(x)=-\frac{x}{2}\int_0^\infty e^{-t^2}\cos(xt)\,dt
+=-\frac{x}{2}F(x).
+\]
+
+Thus $F$ satisfies the differential equation
+\[
+F'(x)=-\frac{x}{2}F(x).
+\]
+Solving,
+\[
+\frac{F'(x)}{F(x)}=-\frac{x}{2},
+\qquad
+\log F(x)=-\frac{x^2}{4}+C,
+\]
+so
+\[
+F(x)=Ce^{-x^2/4}.
+\]
+
+To determine $C$, evaluate at $x=0$:
+\[
+F(0)=\int_0^\infty e^{-t^2}\,dt=\frac{\sqrt{\pi}}{2}.
+\]
+Hence
+\[
+F(x)=\frac{\sqrt{\pi}}{2}e^{-x^2/4}.
+\]
+
+
+\item
+Let
+\[
+F(x)=\int_0^\infty e^{-t^2-x^2/t^2}\,dt,\qquad x\in\mathbb R.
+\]
+
+We first justify differentiation under the integral sign.
+For $t>0$,
+\[
+\frac{\partial}{\partial x}\big(e^{-t^2-x^2/t^2}\big)
+=-\frac{2x}{t^2}e^{-t^2-x^2/t^2}.
+\]
+Moreover,
+\[
+\left|\frac{2x}{t^2}e^{-t^2-x^2/t^2}\right|
+\le 2|x|\,t^{-2}e^{-x^2/t^2}.
+\]
+For fixed $x$, the function $t^{-2}e^{-x^2/t^2}$ is integrable on $(0,\infty)$, so
+$F$ is differentiable and
+\[
+F'(x)=-2x\int_0^\infty \frac{1}{t^2}e^{-t^2-x^2/t^2}\,dt.
+\]
+
+We now relate this integral to $F(x)$.
+Assume $x>0$ and make the change of variables
+\[
+u=\frac{x}{t}, \qquad t=\frac{x}{u}, \qquad dt=-\frac{x}{u^2}\,du.
+\]
+Then
+\[
+\int_0^\infty \frac{1}{t^2}e^{-t^2-x^2/t^2}\,dt
+=\int_\infty^0 \frac{u^2}{x^2}e^{-x^2/u^2-u^2}\left(-\frac{x}{u^2}\right)\,du
+=\frac{1}{x}\int_0^\infty e^{-u^2-x^2/u^2}\,du.
+\]
+Therefore,
+\[
+F'(x)=-2x\cdot\frac{1}{x}\int_0^\infty e^{-u^2-x^2/u^2}\,du
+=-2F(x), \qquad x>0.
+\]
+
+If $x<0$, write $x=-|x|$ and repeat the argument to obtain
+\[
+F'(x)=2F(x), \qquad x<0.
+\]
+
+Thus $F$ satisfies
+\[
+F'(x)=-2\,\mathrm{sgn}(x)\,F(x), \qquad x\neq0.
+\]
+Solving this differential equation yields
+\[
+F(x)=Ce^{-2|x|}.
+\]
+
+To determine the constant $C$, evaluate at $x=0$:
+\[
+F(0)=\int_0^\infty e^{-t^2}\,dt=\frac{\sqrt{\pi}}{2}.
+\]
+Hence
+\[
+F(x)=\frac{\sqrt{\pi}}{2}e^{-2|x|}.
+\]
+
+Finally, for $p,q>0$, write
+\[
+\int_0^\infty e^{-pt^2-q/t^2}\,dt
+=\int_0^\infty e^{-(\sqrt{p}t)^2-(\sqrt{q}/t)^2}\,dt.
+\]
+With the substitution $u=\sqrt{p}\,t$, $dt=du/\sqrt{p}$, we obtain
+\[
+\int_0^\infty e^{-pt^2-q/t^2}\,dt
+=\frac{1}{\sqrt{p}}\int_0^\infty e^{-u^2-(\sqrt{pq}/u)^2}\,du
+=\frac{\sqrt{\pi}}{2\sqrt{p}}e^{-2\sqrt{pq}}.
+\]
+
+
+
+
+\end{enumerate}
+
+
+
+\end{document}

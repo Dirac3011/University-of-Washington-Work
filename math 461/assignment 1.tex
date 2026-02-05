@@ -1,0 +1,219 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 461 Homework \#1}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item
+Let $G=(V,E)$ be a simple graph with $n$ vertices, where $V$ is the set of vertices and $E$ is the set of edges, and edges connect distinct pairs of vertices with no multiple edges or loops.
+
+The degree of a vertex is the number of edges incident to that vertex.
+
+The smallest possible degree of a vertex is $0$. This occurs when a vertex has no edges connected to it. For example, if $V=\{v_1,\dots,v_n\}$ and $E=\varnothing$, then every vertex has degree $0$. Thus no vertex can have degree smaller than $0$.
+
+The largest possible degree of a vertex is $n-1$. This is because a vertex can be connected to at most every other vertex in the graph. If a vertex $v\in V$ were connected to all other $n-1$ vertices, then $\deg(v)=n-1$. It is impossible for a vertex to have degree $n$ or more, since there are only $n-1$ other vertices available to connect to.
+
+Therefore, in any graph with $n$ vertices, the degree of any vertex must satisfy
+\[
+0 \le \deg(v) \le n-1.
+\]
+\item
+Let the vertices of an $n$-gon be the points $V=\{v_1,v_2,\dots,v_n\}$ arranged in the plane in convex position, and let the edges of the polygon be the line segments connecting consecutive vertices.
+
+A diagonal is a line segment connecting two vertices that are not adjacent and is not an edge of the polygon.
+
+From each vertex $v_i$, there are $n-3$ diagonals: we cannot connect $v_i$ to itself, and we cannot connect it to its two adjacent vertices, since those connections are edges of the polygon. Thus, counting from all vertices, we initially obtain $n(n-3)$ diagonals.
+
+However, each diagonal is counted twice in this process, once from each of its endpoints. Therefore, the total number of diagonals in an $n$-gon is
+\[
+\frac{n(n-3)}{2}.
+\]
+
+\item
+I designate the kingdom as a graph $G=(V,E)$, where $V$ is the set of all the cities and $E$ is the set of all the roads in the city
+
+There are exactly $13$ roads lead out of each city. This means that every vertex in the graph has degree $13$. Let $V=n$ be the number of cities(like our nodes) and $E$ be the number of roads(similar to edges).
+
+The sum of the degrees of all vertices is therefore $13n$. On the other hand, each road contributes $2$ to the total degree count, since it is incident to two cities. Thus,
+\[
+13n = 2E.
+\]
+
+Since the kingdomn has $10000$ roads. Then
+\[
+2E = 20000,
+\]
+so
+\[
+13n = 20000.
+\]
+This gives
+\[
+n = \frac{20000}{13},
+\]
+which is not an integer.
+
+Since the number of cities must be an integer, this is impossible. Therefore, a kingdom in which $13$ roads lead out of each city cannot have exactly $10000$ roads.
+\item
+\begin{enumerate}
+\item
+
+Base case: For $n=1$, the left-hand side is $1$, and the right-hand side is $\frac{1(2)}{2}=1$, so the statement holds.
+
+Inductive step: Assume that for some $k\ge 1$,
+\[
+1+2+\cdots+k=\frac{k(k+1)}{2}.
+\]
+We must show that
+\[
+1+2+\cdots+k+(k+1)=\frac{(k+1)(k+2)}{2}.
+\]
+Using the inductive hypothesis,
+\[
+1+2+\cdots+k+(k+1)=\frac{k(k+1)}{2}+(k+1).
+\]
+Factoring out $(k+1)$ gives
+\[
+\frac{k(k+1)}{2}+(k+1)=(k+1)\left(\frac{k}{2}+1\right)=\frac{(k+1)(k+2)}{2}.
+\]
+Thus the statement holds for $k+1$, and by induction the formula is true for all $n\ge 1$.
+
+\item
+We prove by mathematical induction that
+\[
+\sum_{i=1}^n i\cdot 2^i=(n-1)2^{n+1}+2
+\]
+for all integers $n\ge 1$.
+
+Base case: For $n=1$, the left-hand side is $1\cdot 2^1=2$, and the right-hand side is $(1-1)2^{2}+2=2$, so the statement holds.
+
+Inductive step: Assume that for some $k\ge 1$,
+\[
+\sum_{i=1}^k i\cdot 2^i=(k-1)2^{k+1}+2.
+\]
+We must show that
+\[
+\sum_{i=1}^{k+1} i\cdot 2^i = k2^{k+2}+2.
+\]
+Starting from the left-hand side,
+\[
+\sum_{i=1}^{k+1} i\cdot 2^i
+= \sum_{i=1}^k i\cdot 2^i + (k+1)2^{k+1}.
+\]
+Using the inductive hypothesis,
+\[
+= (k-1)2^{k+1}+2+(k+1)2^{k+1}.
+\]
+Combining like terms,
+\[
+= \left[(k-1)+(k+1)\right]2^{k+1}+2
+= 2k\,2^{k+1}+2
+= k2^{k+2}+2.
+\]
+Thus the statement holds for $k+1$, and by induction the formula is true for all $n\ge 1$.
+\end{enumerate}
+\item
+
+Base cases: For $n=0$, the formula gives $a_0=0\cdot 3^{-1}=0$, which agrees with the definition. For $n=1$, the formula gives $a_1=1\cdot 3^{0}=1$, which also agrees with the definition.
+
+Inductive step: Assume that for some $k\ge 0$,
+\[
+a_k = k\cdot 3^{\,k-1}
+\quad\text{and}\quad
+a_{k+1} = (k+1)\cdot 3^{\,k}.
+\]
+We must show that
+\[
+a_{k+2} = (k+2)\cdot 3^{\,k+1}.
+\]
+Using the recurrence relation and the inductive hypothesis,
+\[
+a_{k+2} = 6a_{k+1}-9a_k
+= 6\bigl((k+1)3^{k}\bigr)-9\bigl(k3^{k-1}\bigr).
+\]
+Factoring out $3^{k-1}$,
+\[
+a_{k+2} = 3^{k-1}\left(6(k+1)3-9k\right)
+= 3^{k-1}\left(18k+18-9k\right).
+\]
+Simplifying,
+\[
+a_{k+2} = 3^{k-1}\left(9k+18\right)
+= 9(k+2)3^{k-1}
+= (k+2)3^{k+1}.
+\]
+Thus the statement holds for $k+2$, and by induction the formula is true for all $n\ge 0$.
+\item
+
+Base case: For $n=1$, we must show that $T$ can be partitioned into $4$ similar triangles. Let the vertices of $T$ be $A$, $B$, and $C$. Let $D$, $E$, and $F$ be the midpoints of sides $BC$, $CA$, and $AB$, respectively. Connect $D$ to $E$, $E$ to $F$, and $F$ to $D$. These three segments divide $T$ into four smaller triangles. Each of the four triangles has the same angles as $T$, and each side length is exactly one half of the corresponding side of $T$. Therefore, all four triangles are similar to $T$.
+
+Inductive step: Assume that for some $k\ge 1$, the triangle $T$ can be partitioned into $3k+1$ triangles similar to $T$. We show that $T$ can be partitioned into $3(k+1)+1=3k+4$ similar triangles.
+
+Starting from the partition into $3k+1$ similar triangles, select one of these smaller triangles. By the base-case construction, this triangle can be subdivided into $4$ smaller triangles similar to it, and hence similar to $T$. This replaces one triangle with four, increasing the total number of triangles by $3$.
+
+Thus the total number of similar triangles becomes
+\[
+(3k+1)+3 = 3k+4 = 3(k+1)+1.
+\]
+By mathematical induction, for every positive integer $n$, any triangle $T$ can be partitioned into exactly $3n+1$ triangles similar to $T$.
+
+
+\item
+
+Base case: For $n=0$, there are no lines, and the plane consists of exactly $1$ region. The formula gives $\frac{0\cdot 1}{2}+1=1$, so the statement holds. For $n=1$, one line divides the plane into $2$ regions, and the formula gives $\frac{1\cdot 2}{2}+1=2$.
+
+Inductive step: Assume that for some $k\ge 1$, $k$ lines divide the plane into
+\[
+\frac{k(k+1)}{2}+1
+\]
+regions. Now add a $(k+1)$st line. Since no two lines are parallel and no three intersect at a single point, the new line intersects each of the $k$ existing lines at a distinct point. These $k$ intersection points divide the new line into $k+1$ segments.
+
+Each of these $k+1$ segments lies in a different existing region and splits that region into two parts. Thus, the new line creates exactly $k+1$ new regions.
+
+Therefore, the total number of regions becomes
+\[
+\left(\frac{k(k+1)}{2}+1\right)+(k+1)
+= \frac{(k+1)(k+2)}{2}+1.
+\]
+This matches the formula with $n=k+1$.
+
+By mathematical induction, $n$ lines in the plane, with no two parallel and no three intersecting at a common point, divide the plane into exactly $\frac{n(n+1)}{2}+1$ regions.
+\item
+Consider a $3\times 3$ grid of boxes, where each box contains one of the numbers $-1,0,1$. There are $8$ sums in total: $3$ row sums, $3$ column sums, and $2$ diagonal sums.
+
+Each sum is the sum of exactly $3$ numbers, each chosen from $\{-1,0,1\}$. Therefore, any such sum must be an integer between $-3$ and $3$, inclusive. The possible values of a sum are
+\[
+-3,-2,-1,0,1,2,3,
+\]
+which gives $7$ possible values.
+
+We now apply the Pigeonhole Principle. The pigeons are the $8$ line sums (rows, columns, and diagonals). The pigeonholes are the $7$ possible integer values from $-3$ to $3$. Each line sum is assigned to the pigeonhole corresponding to its numerical value.
+
+Since there are $8$ pigeons and only $7$ pigeonholes, by the Pigeonhole Principle at least two pigeons must be assigned to the same pigeonhole. This means that at least two of the $8$ line sums must be equal.
+
+Therefore, among the sums of the rows, columns, and diagonals, at least two sums are equal.
+
+
+\end{enumerate}
+\end{document}

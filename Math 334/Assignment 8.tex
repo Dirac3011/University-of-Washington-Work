@@ -1,0 +1,307 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 334 Homework \#7}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item For the cardioid \(r = 1 + \cos\theta\), the region is traced once as
+\(\theta\) runs from \(0\) to \(2\pi\). The area in polar coordinates is
+\[
+A = \frac12 \int_{\alpha}^{\beta} r^{2}\,d\theta
+   = \frac12 \int_{0}^{2\pi} (1+\cos\theta)^{2}\,d\theta.
+\]
+Compute
+\[
+(1+\cos\theta)^{2} = 1 + 2\cos\theta + \cos^{2}\theta
+= 1 + 2\cos\theta + \frac{1+\cos 2\theta}{2}
+= \frac32 + 2\cos\theta + \frac12\cos 2\theta .
+\]
+Hence
+\[
+A = \frac12 \int_{0}^{2\pi} \left(\frac32 + 2\cos\theta
+     + \frac12\cos 2\theta\right)\,d\theta
+  = \frac12 \left[\frac32(2\pi) + 0 + 0\right]
+  = \frac{3\pi}{2}.
+\]
+
+\item The region is above the \(xy\)-plane (\(z \ge 0\)), below the cone
+\(z = 2 - \sqrt{x^{2}+y^{2}}\), and inside the cylinder
+\((x-1)^{2} + y^{2} = 1\). Use cylindrical coordinates
+\(x = r\cos\theta\), \(y = r\sin\theta\), \(z = z\). The cone becomes
+\[
+z = 2 - r,
+\]
+and the cylinder becomes
+\[
+(x-1)^{2} + y^{2} = 1
+\quad\Longrightarrow\quad
+(r\cos\theta - 1)^{2} + (r\sin\theta)^{2} = 1
+\]
+\[
+r^{2} - 2r\cos\theta + 1 = 1
+\quad\Longrightarrow\quad
+r(r - 2\cos\theta) = 0.
+\]
+Since \(r \ge 0\), the interior of the cylinder is
+\(0 \le r \le 2\cos\theta\), which requires \(\cos\theta \ge 0\), so
+\(-\frac{\pi}{2} \le \theta \le \frac{\pi}{2}\).
+The region is between \(z = 0\) and \(z = 2 - r\). Thus
+\[
+V = \int_{-\pi/2}^{\pi/2} \int_{0}^{2\cos\theta} \int_{0}^{2-r} r
+    \,dz\,dr\,d\theta.
+\]
+First integrate in \(z\):
+\[
+\int_{0}^{2-r} r\,dz = r(2 - r).
+\]
+Then
+\[
+V = \int_{-\pi/2}^{\pi/2} \int_{0}^{2\cos\theta} r(2 - r)\,dr\,d\theta
+  = \int_{-\pi/2}^{\pi/2}
+    \left[ r^{2} - \frac{r^{3}}{3} \right]_{0}^{2\cos\theta} d\theta
+\]
+\[
+= \int_{-\pi/2}^{\pi/2}
+   \left(4\cos^{2}\theta - \frac{8}{3}\cos^{3}\theta\right) d\theta
+  = 2\pi - \frac{32}{9}.
+\]
+So the volume is
+\[
+V = 2\pi - \frac{32}{9}.
+\]
+\item Let the ball of radius \(R\) be centered at the origin. At a point with spherical
+coordinates \((r,\phi,\theta)\), the distance from the boundary is \(R-r\), so the density is
+\(\rho(r)=c(R-r)\). Using spherical coordinates,
+\[
+m = \iiint_{\text{ball}} \rho\,dV
+  = \int_{0}^{2\pi} \int_{0}^{\pi} \int_{0}^{R} c(R-r)\,r^{2}\sin\phi \,dr\,d\phi\,d\theta.
+\]
+First integrate in \(r\):
+\[
+\int_{0}^{R} (R-r)r^{2}\,dr
+= \int_{0}^{R} (Rr^{2}-r^{3})\,dr
+= R\frac{R^{3}}{3}-\frac{R^{4}}{4}
+= \frac{R^{4}}{12}.
+\]
+Thus
+\[
+m = c\left( \int_{0}^{2\pi} d\theta \right)
+      \left( \int_{0}^{\pi} \sin\phi \, d\phi \right)
+      \frac{R^{4}}{12}
+  = c(2\pi)(2)\frac{R^{4}}{12}
+  = \frac{\pi c R^{4}}{3}.
+\]
+
+\item The region \(S\) lies in the first quadrant and is bounded by
+\(xy = 1\), \(xy = 3\), \(x^{2}-y^{2}=1\), and \(x^{2}-y^{2}=4\).
+Use the transformation
+\[
+u = xy, \qquad v = x^{2}-y^{2}.
+\]
+Then \(S\) maps to the rectangle
+\[
+T = \{(u,v): 1 \le u \le 3,\ 1 \le v \le 4\}.
+\]
+Compute the Jacobian:
+\[
+D G(x,y)
+=
+\begin{pmatrix}
+\partial u/\partial x & \partial u/\partial y \\
+\partial v/\partial x & \partial v/\partial y
+\end{pmatrix}
+=
+\begin{pmatrix}
+y & x \\
+2x & -2y
+\end{pmatrix},
+\]
+so
+\[
+\det D G(x,y) = y(-2y) - x(2x) = -2(x^{2}+y^{2}),
+\quad
+|\det D G(x,y)| = 2(x^{2}+y^{2}).
+\]
+Since \(du\,dv = |\det D G|\,dA\),
+\[
+dA = \frac{1}{|\det D G|}\,du\,dv
+    = \frac{1}{2(x^{2}+y^{2})}\,du\,dv.
+\]
+Therefore
+\[
+\iint_{S} (x^{2}+y^{2})\,dA
+= \iint_{T} (x^{2}+y^{2})\frac{1}{2(x^{2}+y^{2})}\,du\,dv
+= \frac12 \iint_{T} du\,dv.
+\]
+Now
+\[
+\iint_{T} du\,dv
+= \int_{1}^{3} \int_{1}^{4} 1\,dv\,du
+= (3-1)(4-1) = 2\cdot 3 = 6,
+\]
+so
+\[
+\iint_{S} (x^{2}+y^{2})\,dA = \frac12 \cdot 6 = 3.
+\]
+\item
+\begin{enumerate}
+
+\item Here \(F(x,y,z) = (yz,x^{2},xz)\) and \(C\) is the line segment from
+\((0,0,0)\) to \((1,1,1)\). A parametrization is
+\[
+\mathbf r(t) = (t,t,t), \quad 0 \le t \le 1,
+\]
+so
+\[
+\mathbf r'(t) = (1,1,1).
+\]
+Then
+\[
+F(\mathbf r(t)) = (t^{2},t^{2},t^{2}),
+\]
+and the line integral is
+\[
+\int_{C} F \cdot d\mathbf x
+= \int_{0}^{1} F(\mathbf r(t)) \cdot \mathbf r'(t)\,dt
+= \int_{0}^{1} (t^{2},t^{2},t^{2}) \cdot (1,1,1)\,dt
+= \int_{0}^{1} 3t^{2}\,dt
+= 1.
+\]
+
+\item Now \(C\) is the curve \(y=x^{2}\), \(z=x^{3}\) from \((0,0,0)\) to \((1,1,1)\).
+Use the parametrization
+\[
+\mathbf r(t) = (t,t^{2},t^{3}), \quad 0 \le t \le 1,
+\]
+so
+\[
+\mathbf r'(t) = (1,2t,3t^{2}).
+\]
+Then
+\[
+F(\mathbf r(t)) = (yz,x^{2},xz)
+= (t^{2}\cdot t^{3}, t^{2}, t\cdot t^{3})
+= (t^{5}, t^{2}, t^{4}).
+\]
+Thus
+\[
+\int_{C} F \cdot d\mathbf x
+= \int_{0}^{1} F(\mathbf r(t)) \cdot \mathbf r'(t)\,dt
+= \int_{0}^{1} \bigl(t^{5} + 2t^{3} + 3t^{6}\bigr)\,dt
+= \left[\frac{t^{6}}{6} + \frac{t^{4}}{2} + \frac{3t^{7}}{7}\right]_{0}^{1}
+= \frac{1}{6} + \frac{1}{2} + \frac{3}{7}
+= \frac{23}{21}.
+\]
+\end{enumerate}
+
+\item Let \(F(x,y,z) = (2y - z,\; y - z,\; -x)\).  
+The curve \(C\) is the intersection of the cylinder \(x^{2}+y^{2}=1\) and the plane
+\(z=y\), traversed anticlockwise when viewed from the positive \(z\)-axis.
+
+A convenient parametrization is
+\[
+\mathbf r(t) = (\cos t,\; \sin t,\; \sin t), \qquad 0 \le t \le 2\pi,
+\]
+which runs once around the circle anticlockwise in the \(xy\)-projection.
+Then
+\[
+\mathbf r'(t) = (-\sin t,\; \cos t,\; \cos t).
+\]
+On \(C\),
+\[
+F(\mathbf r(t)) = \bigl(2\sin t - \sin t,\; \sin t - \sin t,\; -\cos t\bigr)
+= (\sin t,\; 0,\; -\cos t).
+\]
+Hence
+\[
+F(\mathbf r(t)) \cdot \mathbf r'(t)
+= \sin t(-\sin t) + 0\cdot \cos t + (-\cos t)\cos t
+= -\sin^{2} t - \cos^{2} t = -1.
+\]
+Therefore
+\[
+\int_{C} F \cdot d\mathbf x
+= \int_{0}^{2\pi} -1\,dt
+= -2\pi.
+\]
+
+\item Let \(U \subset \mathbb R^{2}\) be open and connected, fix \(x_{0} \in U\), and let
+\(F(x,y) = (P(x,y),Q(x,y))\) be continuous and path-independent on \(U\).  
+For each \(x \in U\), define
+\[
+f(x) = \int_{x_{0}}^{x} F \cdot d\mathbf x,
+\]
+where the integral is taken along any piecewise \(C^{1}\) path from \(x_{0}\) to \(x\).
+Path-independence implies that this is well defined (independent of the choice of path).
+
+Fix \((x,y) \in U\). For \(h\) small enough so that \((x+h,y) \in U\), consider the
+difference
+\[
+f(x+h,y) - f(x,y).
+\]
+By path-independence, this equals the line integral of \(F\) along any path from
+\((x,y)\) to \((x+h,y)\). Choose the straight segment
+\[
+\gamma(t) = (t,y), \qquad x \le t \le x+h.
+\]
+Then \(\gamma'(t) = (1,0)\), and hence
+\[
+f(x+h,y) - f(x,y)
+= \int_{\gamma} F \cdot d\mathbf x
+= \int_{x}^{x+h} F(\gamma(t)) \cdot \gamma'(t)\,dt
+= \int_{x}^{x+h} P(t,y)\,dt.
+\]
+Thus
+\[
+\frac{f(x+h,y) - f(x,y)}{h}
+= \frac{1}{h} \int_{x}^{x+h} P(t,y)\,dt.
+\]
+Since \(P\) is continuous, the mean value theorem for integrals gives
+\[
+\lim_{h \to 0} \frac{1}{h} \int_{x}^{x+h} P(t,y)\,dt = P(x,y),
+\]
+so the partial derivative \(f_{x}(x,y)\) exists and
+\[
+f_{x}(x,y) = P(x,y).
+\]
+
+A completely analogous argument, using the vertical segment
+\(\eta(s) = (x,s)\), \(y \le s \le y+k\), shows that for \(k\) small,
+\[
+f(x,y+k) - f(x,y) = \int_{y}^{y+k} Q(x,s)\,ds,
+\]
+and therefore
+\[
+f_{y}(x,y) = Q(x,y).
+\]
+
+Hence \(f\) has partial derivatives everywhere on \(U\) and
+\[
+\nabla f(x,y) = (f_{x}(x,y), f_{y}(x,y)) = (P(x,y),Q(x,y)) = F(x,y).
+\]
+Because \(P\) and \(Q\) are continuous, the partial derivatives \(f_{x}\) and \(f_{y}\)
+are continuous, so \(f \in C^{1}(U)\) and \(\nabla f = F\) as required.
+
+\end{enumerate}
+\end{document}

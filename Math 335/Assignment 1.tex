@@ -1,0 +1,210 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 335 Homework \#1}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item The series is
+\[
+10x^{-2}+20x^{-4}+40x^{-6}+\cdots = \sum_{n=1}^{\infty} 10\cdot 2^{n-1} x^{-2n}.
+\]
+This is a geometric series with ratio \(r=2/x^{2}\). It converges if \(|2/x^{2}|<1\), i.e. \(|x|>\sqrt{2}\). For \(|x|>\sqrt{2}\),
+\[
+\sum_{n=1}^{\infty} 10\cdot 2^{n-1} x^{-2n}
+= \frac{10x^{-2}}{1-2/x^{2}}
+= \frac{10}{x^{2}-2}.
+\]
+
+\item The series is
+\[
+1+\frac{1-x}{1+x}+\frac{(1-x)^2}{(1+x)^2}+\cdots
+= \sum_{n=0}^{\infty} \left(\frac{1-x}{1+x}\right)^n.
+\]
+This is geometric with ratio \(r=(1-x)/(1+x)\). It converges if \(|(1-x)/(1+x)|<1\), which is equivalent to \(x>0\). For \(x>0\),
+\[
+\sum_{n=0}^{\infty} \left(\frac{1-x}{1+x}\right)^n
+= \frac{1}{1-\frac{1-x}{1+x}}
+= \frac{1+x}{2x}.
+\]
+
+\item The series is
+\[
+1+\frac34+\frac58+\frac9{16}+\frac{17}{32}+\cdots.
+\]
+The general term can be written as
+\[
+\frac{2^n+1}{2^{n+1}}=\frac12+\frac{1}{2^{n+1}}, \qquad n\ge0.
+\]
+Thus the series is
+\[
+\sum_{n=0}^{\infty}\left(\frac12+\frac{1}{2^{n+1}}\right),
+\]
+which diverges because \(\sum \frac12\) diverges. Hence the given series diverges.
+
+\item The series is
+\[
+\frac{1}{1\cdot2}+\frac{1}{2\cdot3}+\frac{1}{3\cdot4}+\cdots
+= \sum_{n=1}^{\infty} \frac{1}{n(n+1)}.
+\]
+Using partial fractions,
+\[
+\frac{1}{n(n+1)}=\frac{1}{n}-\frac{1}{n+1}.
+\]
+The partial sums telescope:
+\[
+\sum_{n=1}^{N}\left(\frac{1}{n}-\frac{1}{n+1}\right)=1-\frac{1}{N+1}.
+\]
+Letting \(N\to\infty\), the series converges to \(1\).
+
+\item Suppose the infinite product \(\prod_{n=1}^{\infty} a_n\) converges to a nonzero number \(P\). Let \(P_k=\prod_{n=1}^{k} a_n\). Then \(P_k\to P\neq0\). Since
+\[
+a_k=\frac{P_k}{P_{k-1}},
+\]
+and both \(P_k\) and \(P_{k-1}\) tend to \(P\), it follows that
+\[
+\lim_{k\to\infty} a_k=\frac{P}{P}=1.
+\]
+
+\item
+\[
+\sum_{n=0}^{\infty} \frac{\sqrt{n+1}}{n^2-4n+5}
+\]
+For large $n$,
+\[
+\frac{\sqrt{n+1}}{n^2-4n+5}\sim \frac{n^{1/2}}{n^2}=\frac{1}{n^{3/2}}.
+\]
+Since $\sum 1/n^{3/2}$ converges, the given series converges by limit comparison.
+
+\item
+\[
+\sum_{n=1}^{\infty} ne^{-n}
+\]
+Apply the ratio test:
+\[
+\lim_{n\to\infty}\frac{(n+1)e^{-(n+1)}}{ne^{-n}}
+=\lim_{n\to\infty}\frac{n+1}{n}\cdot\frac{1}{e}
+=\frac{1}{e}<1.
+\]
+Hence the series converges.
+
+\item
+\[
+\sum_{n=0}^{\infty}\frac{1^2\cdot3^2\cdots(2n+1)^2}{3^n(2n)!}
+\]
+Using the ratio test,
+\[
+\frac{a_{n+1}}{a_n}
+=\frac{(2n+3)^2}{3(2n+2)(2n+1)}.
+\]
+Taking limits,
+\[
+\lim_{n\to\infty}\frac{(2n+3)^2}{3(2n+2)(2n+1)}=\frac{1}{3}<1.
+\]
+Therefore the series converges.
+
+\item
+\[
+\sum_{n=1}^{\infty}\frac{n!}{10^n}
+\]
+Apply the ratio test:
+\[
+\frac{a_{n+1}}{a_n}=\frac{n+1}{10}.
+\]
+Since this tends to $\infty$, the series diverges.
+
+\item
+\[
+\sum_{n=0}^{\infty}\frac{3^n n!}{n^n}
+\]
+Using the ratio test,
+\[
+\frac{a_{n+1}}{a_n}
+=3\left(\frac{n}{n+1}\right)^n.
+\]
+As $n\to\infty$, this tends to $3/e>1$, so the series diverges.
+
+\item
+\[
+\sum_{n=1}^{\infty}\left(\frac{n}{n+1}\right)^{n^2}
+\]
+We have
+\[
+\ln\left(\frac{n}{n+1}\right)\sim -\frac{1}{n},
+\quad
+n^2\ln\left(\frac{n}{n+1}\right)\sim -n.
+\]
+Thus
+\[
+\left(\frac{n}{n+1}\right)^{n^2}\sim e^{-n}.
+\]
+Since $\sum e^{-n}$ converges, the series converges by comparison.
+
+\item
+\[
+\sum_{n=1}^{\infty}\left[1-\cos\left(\frac{1}{n}\right)\right]
+\]
+Using the Taylor expansion,
+\[
+1-\cos x\sim \frac{x^2}{2},
+\]
+so
+\[
+1-\cos\left(\frac{1}{n}\right)\sim \frac{1}{2n^2}.
+\]
+Since $\sum 1/n^2$ converges, the series converges.
+
+\item
+\[
+\sum_{n=2}^{\infty}\frac{1}{n(\log n)^p}
+\]
+Using the integral test,
+\[
+\int_2^\infty \frac{dx}{x(\log x)^p}
+=\int_{\log 2}^\infty \frac{du}{u^p}.
+\]
+This integral converges if $p>1$ and diverges if $p\le1$.
+Hence the series converges exactly when $p>1$.
+
+\item
+Using integral bounds for decreasing functions,
+\[
+\int_2^{10^{40}}\frac{dx}{x\log x}
+<\sum_{n=2}^{10^{40}}\frac{1}{n\log n}
+<1+\int_2^{10^{40}}\frac{dx}{x\log x}.
+\]
+Evaluating,
+\[
+4.88<\sum_{n=2}^{10^{40}}\frac{1}{n\log n}<5.61.
+\]
+Similarly,
+\[
+\int_{10^{40}}^\infty\frac{dx}{x(\log x)^2}
+=\frac{1}{\log(10^{40})}\approx 0.011,
+\]
+so
+\[
+\sum_{n=10^{40}}^\infty\frac{1}{n(\log n)^2}\approx 0.011.
+\]
+\end{enumerate}
+\end{document}

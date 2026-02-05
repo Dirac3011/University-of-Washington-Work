@@ -1,0 +1,250 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 334 Homework \#7}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item 
+Given 
+\[
+h(x)=\int_{0}^{x}\int_{0}^{y} g(t)\,dt\,dy ,
+\]
+the region of integration is 
+\[
+D=\{(y,t):0\le t\le y\le x\}.
+\]
+Reversing the order: \(t\) goes \(0\le t\le x\); for each \(t\), \(y\) goes \(t\le y\le x\). Thus
+\[
+h(x)
+= \int_{0}^{x}\int_{t}^{x} g(t)\,dy\,dt
+= \int_{0}^{x} g(t)\bigl[y\bigr]_{y=t}^{y=x} dt
+= \int_{0}^{x} (x-t)\,g(t)\,dt.
+\]
+
+\item 
+The region \(S\) is bounded below by \(z = x^{2}+y^{2}\) and above by \(z=1\). Their intersection is the circle \(x^{2}+y^{2}=1\).
+
+\begin{itemize}
+
+\item[(a)] Order \(z,y,x\):
+\[
+\iiint_{S} f\,dV
+= \int_{-1}^{1}
+  \int_{-\sqrt{1-x^{2}}}^{\sqrt{1-x^{2}}}
+  \int_{x^{2}+y^{2}}^{1}
+  f(x,y,z)\,dz\,dy\,dx.
+\]
+
+\item[(b)] Order \(y,z,x\):
+\[
+\iiint_{S} f\,dV
+= \int_{-1}^{1}
+  \int_{x^{2}}^{1}
+  \int_{-\sqrt{z-x^{2}}}^{\sqrt{z-x^{2}}}
+  f(x,y,z)\,dy\,dz\,dx.
+\]
+
+\item[(c)] Order \(x,y,z\):
+\[
+\iiint_{S} f\,dV
+= \int_{0}^{1}
+  \int_{-\sqrt{z}}^{\sqrt{z}}
+  \int_{-\sqrt{z-y^{2}}}^{\sqrt{z-y^{2}}}
+  f(x,y,z)\,dx\,dy\,dz.
+\]
+
+\end{itemize}
+
+\item 
+Let
+\[
+f(x,y)=
+\begin{cases}
+y^{-2}, & 0<x<y<1,\\[4pt]
+-x^{-2}, & 0<y<x<1,\\[4pt]
+0, & \text{otherwise}.
+\end{cases}
+\]
+
+\textbf{(a)}  
+Along the line \(x=y/2\),
+\[
+f\!\left(\tfrac y2,y\right)=y^{-2}\to\infty \quad (y\to0^+),
+\]
+and along the line \(y=x/2\),
+\[
+f\!\left(x,\tfrac x2\right)=-x^{-2}\to -\infty \quad (x\to0^+).
+\]
+Thus \(f\) is unbounded on the bounded region \(S=[0,1]\times[0,1]\).  
+A Riemann integrable function on a bounded rectangle must be bounded, so \(f\) is \emph{not} integrable on \(S\).
+
+For fixed \(y>0\),
+\[
+f(x,y)=
+\begin{cases}
+y^{-2}, & 0<x<y,\\[4pt]
+-x^{-2}, & y<x<1,
+\end{cases}
+\]
+which is bounded and piecewise continuous with a single jump at \(x=y\). Hence it is integrable on \([0,1]\).  
+Similarly, for fixed \(x>0\),
+\[
+f(x,y)=
+\begin{cases}
+-x^{-2}, & 0<y<x,\\[4pt]
+y^{-2}, & x<y<1,
+\end{cases}
+\]
+also bounded and piecewise continuous, so integrable on \([0,1]\).  
+
+\textbf{(b)}  
+First compute \(\int_{0}^{1} f(x,y)\,dx\). For fixed \(y\in(0,1]\),
+\[
+\int_{0}^{1} f(x,y)\,dx
+= \int_{0}^{y} y^{-2}\,dx + \int_{y}^{1} (-x^{-2})\,dx.
+\]
+Compute each term:
+\[
+\int_{0}^{y} y^{-2}\,dx = \frac{1}{y},\qquad
+\int_{y}^{1} (-x^{-2})\,dx = 1-\frac{1}{y}.
+\]
+Thus
+\[
+\int_{0}^{1} f(x,y)\,dx = 1.
+\]
+Therefore
+\[
+\int_{0}^{1}\!\int_{0}^{1} f(x,y)\,dx\,dy
+= \int_{0}^{1} 1\,dy = 1.
+\]
+
+Now compute \(\int_{0}^{1} f(x,y)\,dy\). For fixed \(x\in(0,1]\),
+\[
+\int_{0}^{1} f(x,y)\,dy
+= \int_{0}^{x} (-x^{-2})\,dy + \int_{x}^{1} y^{-2}\,dy.
+\]
+Compute:
+\[
+\int_{0}^{x} (-x^{-2})\,dy = -\frac{1}{x},\qquad
+\int_{x}^{1} y^{-2}\,dy = -1+\frac{1}{x}.
+\]
+Thus
+\[
+\int_{0}^{1} f(x,y)\,dy = -1.
+\]
+Therefore
+\[
+\int_{0}^{1}\!\int_{0}^{1} f(x,y)\,dy\,dx
+= \int_{0}^{1} (-1)\,dx = -1.
+\]
+
+Hence both iterated integrals exist but
+\[
+\int_{0}^{1}\!\int_{0}^{1} f(x,y)\,dx\,dy = 1,
+\qquad
+\int_{0}^{1}\!\int_{0}^{1} f(x,y)\,dy\,dx = -1,
+\]
+so they are unequal.
+
+\item
+Let $\chi_{\mathbb{Q}}$ denote the characteristic function of $\mathbb{Q}\cap[0,1]$:
+\[
+\chi_{\mathbb{Q}}(x)=
+\begin{cases}
+1, & x\in\mathbb{Q},\\
+0, & x\notin\mathbb{Q}.
+\end{cases}
+\]
+Both $\mathbb{Q}$ and its complement are dense in $[0,1]$.  
+Let $P$ be any partition of $[0,1]$. Every subinterval of $P$ contains both rational and irrational numbers; hence
+\[
+\inf\{\chi_{\mathbb{Q}}(x): x\text{ in that subinterval}\}=0,\qquad
+\sup\{\chi_{\mathbb{Q}}(x): x\text{ in that subinterval}\}=1.
+\]
+Thus the lower sum $L(\chi_{\mathbb{Q}},P)=0$ and the upper sum
+$U(\chi_{\mathbb{Q}},P)=1$ for every partition $P$. Therefore
+\[
+\sup_P L(\chi_{\mathbb{Q}},P)=0\neq 1=\inf_P U(\chi_{\mathbb{Q}},P),
+\]
+so $\chi_{\mathbb{Q}}$ is not (Riemann) integrable on $[0,1]$.
+
+\item
+We have
+\[
+I=\int_{0}^{2}\int_{0}^{x^{2}}\int_{0}^{y} f(x,y,z)\,dz\,dy\,dx.
+\]
+The region is
+\[
+D=\{(x,y,z): 0\le x\le 2,\ 0\le y\le x^{2},\ 0\le z\le y\}.
+\]
+From $0\le z\le y\le x^{2}\le 4$ we get $0\le z\le4$, and for fixed $z$ we must have
+$z\le y\le4$ and $y\le x^{2}\le 4$, so $x\in[\sqrt{y},2]$.  
+With order $dx\,dy\,dz$,
+\[
+I=\int_{0}^{4}\int_{z}^{4}\int_{\sqrt{y}}^{2} f(x,y,z)\,dx\,dy\,dz.
+\]
+
+\item
+Let $E$ be the square pyramid with base the square of vertices
+$(\pm1,\pm1,0)$ and apex $(0,0,1)$.  
+At height $z\in[0,1]$ the cross-section is the square
+\[
+-1+z\le x\le 1-z,\qquad -1+z\le y\le 1-z.
+\]
+Thus
+\[
+\iiint_{E} f\,dV
+=\int_{0}^{1}\int_{-1+z}^{1-z}\int_{-1+z}^{1-z} e^{x+y}\,dy\,dx\,dz.
+\]
+Compute the inner integrals:
+\[
+\int_{-1+z}^{1-z} e^{y}\,dy = e^{1-z}-e^{-1+z},\qquad
+\int_{-1+z}^{1-z} e^{x}\,dx = e^{1-z}-e^{-1+z},
+\]
+so the double integral at fixed $z$ is
+\[
+\left(e^{1-z}-e^{-1+z}\right)^{2}
+= e^{2-2z}+e^{2z-2}-2.
+\]
+Hence
+\[
+\iiint_{E} f\,dV
+= \int_{0}^{1}\bigl(e^{2-2z}+e^{2z-2}-2\bigr)\,dz.
+\]
+Now
+\[
+\int_{0}^{1} e^{2-2z}\,dz=\frac{1}{2}(e^{2}-1),\qquad
+\int_{0}^{1} e^{2z-2}\,dz=\frac{1}{2}(1-e^{-2}),\qquad
+\int_{0}^{1} 2\,dz=2,
+\]
+so
+\[
+\iiint_{E} f\,dV
+=\frac{1}{2}(e^{2}-1)+\frac{1}{2}(1-e^{-2})-2
+= \frac{e^{2}-e^{-2}}{2}-2.
+\]
+
+
+\end{enumerate}
+\end{document}

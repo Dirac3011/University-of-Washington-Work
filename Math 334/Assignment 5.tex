@@ -1,0 +1,234 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 334 Homework \#5}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+
+\item Suppose $S \subset \mathbb{R}^n$ is open and convex, $f \in C^{1}(S)$, and $\partial_{1}f(x) = 0$ for all $x \in S$.  
+Take any $a,b \in S$ such that $a_j = b_j$ for all $j \neq 1$. Since $S$ is convex, the line segment 
+\[
+[a,b] = \{ (1-t)a + tb \mid 0 \le t \le 1 \} \subset S.
+\]
+Define $g(t) = f((1-t)a + tb)$ for $t \in [0,1]$. Then
+\[
+g'(t) = \nabla f((1-t)a + tb) \cdot (b - a) = \partial_1 f((1-t)a + tb) \, (b_1 - a_1) = 0.
+\]
+Hence $g$ is constant, so $f(a) = f(b)$. Therefore, $f$ is independent of $x_1$ on $S$.
+
+\item The statement is false when $S$ is not convex.  
+Let $S$ be the “staircase” shaped open connected set
+\[
+S = H_1 \cup V \cup H_2,
+\]
+where
+\[
+H_1 = (0,1) \times (0,1), \quad
+V = (1,2) \times (0.4,0.6), \quad
+H_2 = (2,3) \times (0,1).
+\]
+Define a smooth function $\phi : \mathbb{R} \to \mathbb{R}$ such that $\phi(y) = 0$ for $y \le 0.45$, $\phi(y) = 1$ for $y \ge 0.55$, and $\phi$ is smooth on $\mathbb{R}$.  
+Then set
+\[
+f(x,y) =
+\begin{cases}
+y, & (x,y) \in H_1,\\[3pt]
+y + \phi(y), & (x,y) \in V,\\[3pt]
+y + 1, & (x,y) \in H_2.
+\end{cases}
+\]
+These pieces match smoothly on overlaps, so $f$ is differentiable on $S$.  
+In each region $f$ depends only on $y$, hence $\partial_1 f(x,y) = 0$ everywhere on $S$.
+
+Pick $a = (0.5, 0.2) \in H_1$ and $b = (2.5, 0.2) \in H_2$.  
+Then $a_2 = b_2 = 0.2$, but
+\[
+f(a) = 0.2, \quad f(b) = 1.2.
+\]
+Thus $f$ is not independent of $x_1$ even though $\partial_1 f = 0$.  
+
+\item
+\begin{enumerate}
+Let $u(r,\theta)=f(x(r,\theta),y(r,\theta))$ with $x=r\cos\theta$, $y=r\sin\theta$.  
+Then
+\[
+u_r=f_x\cos\theta+f_y\sin\theta,\quad
+x_r=\cos\theta,\ y_r=\sin\theta,\ x_\theta=-r\sin\theta,\ y_\theta=r\cos\theta,\ x_{r\theta}=-\sin\theta,\ y_{r\theta}=\cos\theta.
+\]
+Hence
+\[
+\frac{\partial^2 u}{\partial r\,\partial \theta}
+=(f_{xx}x_\theta+f_{xy}y_\theta)x_r+f_xx_{r\theta}
++(f_{yx}x_\theta+f_{yy}y_\theta)y_r+f_yy_{r\theta},
+\]
+so
+\[
+\boxed{\;
+u_{r\theta}
+=-\sin\theta\,f_x+\cos\theta\,f_y
++r\sin\theta\cos\theta\,(f_{yy}-f_{xx})
++r\cos(2\theta)\,f_{xy}\;}
+\]
+evaluated at $(x,y)=(r\cos\theta,r\sin\theta)$.
+
+\end{enumerate}
+\item
+\begin{enumerate}
+\item $w=f(2x-y^2,\ x\sin 3y,\ x^4)$.
+\[
+u_x=(2,\ \sin 3y,\ 4x^3),\qquad u_y=(-2y,\ 3x\cos 3y,\ 0).
+\]
+First derivatives:
+\[
+w_x=2f_1+(\sin 3y)f_2+4x^3 f_3,\qquad
+w_y=-2y f_1+3x\cos 3y\,f_2.
+\]
+Second derivatives:
+\[
+\boxed{\;
+\begin{aligned}
+w_{xx}&=
+2(2f_{11}+(\sin 3y)f_{12}+4x^3 f_{13})
++(\sin 3y)(2f_{21}+(\sin 3y)f_{22}+4x^3 f_{23})\\
+&\quad+4x^3(2f_{31}+(\sin 3y)f_{32}+4x^3 f_{33})
++12x^2 f_3,\\[4pt]
+w_{xy}&=
+2(-2y f_{11}+3x\cos 3y\,f_{12})
++3\cos 3y\,f_2\\
+&\quad+(\sin 3y)(-2y f_{21}+3x\cos 3y\,f_{22})
++4x^3(-2y f_{31}+3x\cos 3y\,f_{32}).
+\end{aligned}}
+\]
+
+\item $w=f(e^{x-3y},\ \log(x^2+1),\ \sqrt{y^4+4})$.
+\[
+u_x=(e^{x-3y},\ \tfrac{2x}{x^2+1},\ 0),\quad
+u_y=(-3e^{x-3y},\ 0,\ k),\quad
+k=\frac{2y^3}{\sqrt{y^4+4}},\quad
+k_y=\frac{6y^2}{\sqrt{y^4+4}}-\frac{4y^6}{(y^4+4)^{3/2}}.
+\]
+First derivatives:
+\[
+w_x=e^{x-3y}f_1+\frac{2x}{x^2+1}f_2,\qquad
+w_y=-3e^{x-3y}f_1+k\,f_3.
+\]
+Mixed and $y$–second:
+\[
+\boxed{\;
+\begin{aligned}
+w_{xy}&=
+e^{x-3y}\!\left(-3e^{x-3y}f_{11}+k\,f_{13}\right)
+-3e^{x-3y}f_1
++\frac{2x}{x^2+1}\!\left(-3e^{x-3y}f_{21}+k\,f_{23}\right),\\[4pt]
+w_{yy}&=
+9e^{x-3y}f_1
+-3e^{x-3y}\!\left(-3e^{x-3y}f_{11}+k\,f_{13}\right)
++k_y f_3
++k\!\left(-3e^{x-3y}f_{31}+k\,f_{33}\right).
+\end{aligned}}
+\]
+
+\end{enumerate}
+\item \begin{enumerate}
+\item For $f(x,y)=x\sin(x+y)$, write $\sin s=s-\frac{s^{3}}{6}+\frac{s^{5}}{120}-\cdots$ with $s=x+y$ and keep terms of total degree $\le 4$:
+\[
+T_4(x,y)=x(x+y)-\frac{x(x+y)^3}{6}
+= x^2+xy-\frac{1}{6}\!\left(x^4+3x^3y+3x^2y^2+xy^3\right).
+\]
+
+\item For $f(x,y)=e^{xy}\cos(x^2+y^2)$, use
+$e^{xy}=1+xy+\frac{(xy)^2}{2}+O(6)$ and
+$\cos t=1-\frac{t^2}{2}+O(6)$ with $t=x^2+y^2$.  
+Up to total degree $4$,
+\[
+T_4(x,y)=\Big(1+xy+\tfrac12x^2y^2\Big)\Big(1-\tfrac12(x^2+y^2)^2\Big)
+=1+xy-\frac12x^4-\frac12y^4-\frac12x^2y^2.
+\]
+
+\item For $f(x,y)=\dfrac{e^{x-2y}}{1+x^2-y}$, expand
+$e^{x-2y}=1+(x-2y)+\frac{(x-2y)^2}{2}+\frac{(x-2y)^3}{6}+\frac{(x-2y)^4}{24}+O(5)$
+and
+\[
+\frac{1}{1+x^2-y}=1-(x^2-y)+(x^2-y)^2-(x^2-y)^3+(x^2-y)^4+O(5).
+\]
+Multiplying and keeping total degree $\le 4$ gives
+\[
+\begin{aligned}
+T_4(x,y)=\;&1+(x-y)+\Big(-\tfrac12x^2-xy+y^2\Big)
++\Big(-\tfrac56x^3-\tfrac12x^2y+xy^2-\tfrac13y^3\Big)\\
+&+\Big(\tfrac{13}{24}x^4-\tfrac16x^3y-\tfrac12x^2y^2-\tfrac13xy^3+\tfrac13y^4\Big).
+\end{aligned}
+\]
+
+
+\end{enumerate}
+
+
+\item Let $\alpha=(\alpha_1,\dots,\alpha_n)\in\mathbb{N}^n$ and write
+\[
+(\mathbf{x}+\mathbf{y})^\alpha=\prod_{j=1}^n (x_j+y_j)^{\alpha_j}.
+\]
+By the one–variable binomial theorem,
+\[
+(x_j+y_j)^{\alpha_j}=\sum_{\beta_j=0}^{\alpha_j}\binom{\alpha_j}{\beta_j}x_j^{\beta_j}y_j^{\alpha_j-\beta_j}.
+\]
+Multiply these expansions and regroup:
+\[
+\prod_{j=1}^n\sum_{\beta_j=0}^{\alpha_j}\binom{\alpha_j}{\beta_j}x_j^{\beta_j}y_j^{\alpha_j-\beta_j}
+=\sum_{\beta\le\alpha}\Big(\prod_{j=1}^n\binom{\alpha_j}{\beta_j}\Big)\mathbf{x}^{\beta}\mathbf{y}^{\alpha-\beta}.
+\]
+With multi–index factorials $\alpha!=\prod_j \alpha_j!$ etc.,
+\[
+\prod_{j=1}^n\binom{\alpha_j}{\beta_j}=\frac{\alpha!}{\beta!(\alpha-\beta)!}.
+\]
+Hence
+\[
+(\mathbf{x}+\mathbf{y})^\alpha=\sum_{\beta\le\alpha}\binom{\alpha}{\beta}\mathbf{x}^{\beta}\mathbf{y}^{\alpha-\beta},
+\qquad
+\binom{\alpha}{\beta}=\frac{\alpha!}{\beta!(\alpha-\beta)!}.
+\]
+
+\item Let $f:I\to\mathbb{R}$ be $C^k$ and $g(x,y)=f(x+y)$. Put $a=(a_1,a_2)$ and $h=(h_1,h_2)=(x-a_1,y-a_2)$.
+For any multi–index $\alpha$, the mixed derivative satisfies
+\[
+D^\alpha g(a)=f^{(|\alpha|)}(a_1+a_2),
+\]
+since derivatives of $x+y$ are $1$ and mixed derivatives commute.  
+The $k$th-order Taylor polynomial of $g$ at $a$ is
+\[
+T_{k}g(a;h)=\sum_{|\alpha|\le k}\frac{D^\alpha g(a)}{\alpha!}h^\alpha
+=\sum_{|\alpha|\le k}\frac{f^{(|\alpha|)}(a_1+a_2)}{\alpha!}h^\alpha.
+\]
+Group by $m=|\alpha|$ and use item 1 with $\mathbf{x}=h_1$, $\mathbf{y}=h_2$:
+\[
+\sum_{m=0}^k \frac{f^{(m)}(a_1+a_2)}{m!}(h_1+h_2)^m
+= P_{a_1+a_2,k}(h_1+h_2)
+= P_{a_1+a_2,k}(x-a_1+y-a_2).
+\]
+Thus the $k$th Taylor polynomial of $g$ at $a$ equals $P_{a_1+a_2,k}(x+y)$.
+
+
+
+\end{enumerate}
+\end{document}

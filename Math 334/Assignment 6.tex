@@ -1,0 +1,393 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 334 Homework \#5}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+\item 
+\begin{enumerate}
+\item[c.] $f(x,y)=(x-1)(x^{2}-y^{2})$.
+
+\[
+f_x = 3x^{2}-2x-y^{2},\qquad f_y = -2y(x-1).
+\]
+
+Critical points from $f_x=f_y=0$:
+
+\[
+-2y(x-1)=0 \Rightarrow y=0 \ \text{or}\ x=1.
+\]
+
+\begin{itemize}
+\item If $y=0$: $3x^{2}-2x=0 \Rightarrow x(3x-2)=0 \Rightarrow x=0,\frac23$.  
+      Critical points: $(0,0)$ and $(\frac23,0)$.
+\item If $x=1$: $3-2-y^{2}=0 \Rightarrow y^{2}=1 \Rightarrow y=\pm1$.  
+      Critical points: $(1,1)$ and $(1,-1)$.
+\end{itemize}
+
+Second derivatives:
+
+\[
+f_{xx}=6x-2,\qquad f_{yy}=-2(x-1),\qquad f_{xy}=-2y.
+\]
+
+Hessian determinant:
+
+\[
+D = f_{xx}f_{yy}-f_{xy}^{2}.
+\]
+
+Evaluate:
+
+\[
+\begin{array}{c|c|c|c}
+(x,y) & f_{xx} & f_{yy} & D \\ \hline
+(0,0)      & -2 & 2   & -4<0 \\
+(\tfrac23,0) & 2 & \tfrac23 & \tfrac43>0,\ f_{xx}>0 \\
+(1,1)      & 4 & 0   & -4<0 \\
+(1,-1)     & 4 & 0   & -4<0
+\end{array}
+\]
+
+So:
+\[
+(0,0), (1,\pm1) \text{ are saddle points,}\qquad
+\left(\tfrac23,0\right) \text{ is a (nondegenerate) local minimum.}
+\]
+
+%-----------------------------------------------------------
+
+\item[d.] $f(x,y)=x^{2}y^{2}(2-x-y)$.
+
+\[
+f_x = x y^{2}(4-3x-2y),\qquad
+f_y = x^{2} y(4-2x-3y).
+\]
+
+Critical points solve $f_x=f_y=0$:
+
+\[
+x y^{2}(4-3x-2y)=0,\qquad x^{2}y(4-2x-3y)=0.
+\]
+
+Hence either
+\[
+x=0,\ \text{or}\ y=0,\ \text{or}\ 4-3x-2y=0,\ \text{and}\ 4-2x-3y=0.
+\]
+
+Solving the last pair gives $x=y=\frac45$.  
+Thus the set of critical points is
+
+\[
+\{(x,y):x=0\}\ \cup\ \{(x,y):y=0\}\ \cup\ \left\{\left(\tfrac45,\tfrac45\right)\right\}.
+\]
+
+Second derivatives:
+
+\[
+f_{xx}=y^{2}(4-6x-2y),\quad
+f_{yy}=x^{2}(4-2x-6y),\quad
+f_{xy}=2xy(4-3x-3y).
+\]
+
+At $\left(\frac45,\frac45\right)$:
+
+\[
+f_{xx}=f_{yy}=-\frac{192}{125},\quad f_{xy}=-\frac{128}{125},
+\]
+
+\[
+D=f_{xx}f_{yy}-f_{xy}^{2}
+= \frac{4096}{3125}>0,\qquad f_{xx}<0.
+\]
+
+So $\left(\frac45,\frac45\right)$ is a (nondegenerate) local maximum.
+
+Along the axes ($x=0$ or $y=0$) we have $f=0$ and the Hessian is degenerate.  
+Since $f(x,y)=x^{2}y^{2}(2-x-y)$ has sign equal to $\operatorname{sgn}(2-x-y)$ away from the axes:
+
+\[
+\begin{cases}
+\text{On }y=0,\ x<2,\text{ and on }x=0,\ y<2:\ \text{local minima (}f\ge0\text{ nearby);} \\
+\text{On }y=0,\ x>2,\text{ and on }x=0,\ y>2:\ \text{local maxima (}f\le0\text{ nearby);} \\
+(2,0)\text{ and }(0,2):\ \text{saddle points (both positive and negative values nearby).}
+\end{cases}
+\]
+
+All axis points are degenerate critical points.
+
+%-----------------------------------------------------------
+
+\item[e.] $f(x,y)=(2x^{2}+y^{2})e^{-x^{2}-y^{2}}$.
+
+Let $E=e^{-x^{2}-y^{2}}$ (always $>0$). Then
+
+\[
+f_x = \bigl(4x - 2x(2x^{2}+y^{2})\bigr)E
+     = 2x(2-2x^{2}-y^{2})E,
+\]
+\[
+f_y = \bigl(2y - 2y(2x^{2}+y^{2})\bigr)E
+     = 2y(1-2x^{2}-y^{2})E.
+\]
+
+Set $f_x=f_y=0$ and ignore the nonzero factor $E$:
+
+\[
+x(2-2x^{2}-y^{2})=0,\qquad
+y(1-2x^{2}-y^{2})=0.
+\]
+
+Cases:
+
+\[
+\begin{aligned}
+x=0 &\Rightarrow y(1-y^{2})=0 \Rightarrow y=0,\pm1; \\
+y=0 &\Rightarrow x(2-2x^{2})=0 \Rightarrow x=0,\pm1; \\
+x,y\ne0 &\Rightarrow
+\begin{cases}
+2-2x^{2}-y^{2}=0,\\
+1-2x^{2}-y^{2}=0
+\end{cases}
+\ \Rightarrow\ 1=0\ \text{(impossible).}
+\end{aligned}
+\]
+
+So the critical points are
+\[
+(0,0),\ (0,\pm1),\ (\pm1,0).
+\]
+
+Second derivatives (simplified):
+
+\[
+\begin{aligned}
+f_{xx} &= 2\bigl(2x^{2}(2x^{2}+y^{2}) -10x^{2}-y^{2}+2\bigr)E,\\
+f_{yy} &= \bigl(8x^{2}y^{2}-4x^{2}+4y^{4}-10y^{2}+2\bigr)E,\\
+f_{xy} &= 4xy(2x^{2}+y^{2}-3)E.
+\end{aligned}
+\]
+
+Evaluate at the critical points:
+
+\[
+\begin{array}{c|c|c|c}
+(x,y) & f_{xx} & f_{yy} & D=f_{xx}f_{yy}-f_{xy}^{2} \\ \hline
+(0,0)   & 4        & 2        & 8>0  \\
+(0,\pm1)& 2e^{-1}  & -4e^{-1} & -8e^{-2}<0 \\
+(\pm1,0)& -8e^{-1} & -2e^{-1} & 16e^{-2}>0
+\end{array}
+\]
+
+Thus:
+
+\[
+\begin{aligned}
+&(0,0): &&D>0,\ f_{xx}>0 \Rightarrow\ \text{local minimum;}\\
+&(0,\pm1): &&D<0 \Rightarrow\ \text{saddle points;}\\
+&(\pm1,0): &&D>0,\ f_{xx}<0 \Rightarrow\ \text{local maxima.}
+\end{aligned}
+\]
+
+\end{enumerate}
+\item For the quadratic function \(f(x,y)=ax^{2}+bxy+cy^{2}\), the origin is always a critical point.  
+It is a local minimum when \(4ac-b^{2}>0\) and \(a>0\);  
+a local maximum when \(4ac-b^{2}>0\) and \(a<0\);  
+a saddle point when \(4ac-b^{2}<0\);  
+and degenerate (test inconclusive) when \(4ac-b^{2}=0\).
+
+\item Let $f:\mathbb{R}^n\to\mathbb{R}$ be $C^2$ and let $Hf(a)$ be its Hessian at a point $a\in\mathbb{R}^n$.  
+Let $u\in\mathbb{R}^n$ be a unit vector. Define the one-variable function
+\[
+\varphi(t)=f(a+tu).
+\]
+Then the directional derivative of $f$ at $a$ in the direction $u$ is
+\[
+D_u f(a)=\varphi'(0).
+\]
+By the chain rule,
+\[
+\varphi'(t)=\nabla f(a+tu)\cdot u.
+\]
+Differentiate once more:
+\[
+\varphi''(t)=\frac{d}{dt}\big(\nabla f(a+tu)\cdot u\big)
+=\big( Hf(a+tu)\,u\big)\cdot u,
+\]
+since the derivative of the gradient is the Hessian and $u$ is constant.  
+Thus at $t=0$,
+\[
+\varphi''(0)=\big(Hf(a)\,u\big)\cdot u.
+\]
+By definition, $\varphi''(0)$ is the second directional derivative of $f$ at $a$ in the direction $u$, so for any unit vector $u$,
+\[
+\text{(second directional derivative of $f$ at $a$ in direction $u$)}
+= \big(Hf(a)\,u\big)\cdot u.
+\]
+
+\item We want the extreme values of \(f(x,y)=3x^{2}-2y^{2}+2y\) on the closed disk
+\(\{(x,y):x^{2}+y^{2}\le 1\}\).
+
+First look for critical points in the interior (where \(\nabla f=0\)):
+\[
+f_x=6x,\qquad f_y=-4y+2.
+\]
+So
+\[
+6x=0,\quad -4y+2=0 \;\Rightarrow\; x=0,\ y=\tfrac12.
+\]
+This point satisfies \(x^{2}+y^{2}=\tfrac14\le1\), so it lies inside the disk.  
+Its value is
+\[
+f(0,\tfrac12)=3\cdot 0-2\cdot\left(\tfrac12\right)^2+2\cdot\tfrac12
+=-\tfrac12+1=\tfrac12.
+\]
+
+Next, handle the boundary \(x^{2}+y^{2}=1\) using Lagrange multipliers.  
+Let \(g(x,y)=x^{2}+y^{2}-1=0\). Then
+\[
+\nabla f=(6x,-4y+2),\qquad \nabla g=(2x,2y),
+\]
+and we solve
+\[
+(6x,-4y+2)=\lambda(2x,2y),\qquad x^{2}+y^{2}=1.
+\]
+
+Case 1: \(x=0\). Then \(y^{2}=1\Rightarrow y=\pm1\).  
+Values:
+\[
+f(0,1)=3\cdot0-2\cdot1+2\cdot1=0,\qquad
+f(0,-1)=3\cdot0-2\cdot1+2(-1)=-4.
+\]
+
+Case 2: \(x\neq0\). Then from \(6x=2\lambda x\) we get \(\lambda=3\).  
+Use this in the second equation:
+\[
+-4y+2=2\lambda y=6y \;\Rightarrow\; 2=10y \;\Rightarrow\; y=\tfrac15.
+\]
+Now \(x^{2}+y^{2}=1\) gives
+\[
+x^{2}+ \left(\tfrac15\right)^{2}=1
+\;\Rightarrow\; x^{2}=\tfrac{24}{25}
+\;\Rightarrow\; x=\pm\frac{2\sqrt6}{5}.
+\]
+Values:
+\[
+f\!\left(\pm\frac{2\sqrt6}{5},\frac15\right)
+=3\cdot\frac{24}{25}-2\cdot\frac{1}{25}+2\cdot\frac15
+=\frac{72-2}{25}+\frac{2}{5}
+=\frac{70}{25}+\frac{2}{5}
+=\frac{14}{5}+\frac{2}{5}
+=\frac{16}{5}.
+\]
+
+Since \(f\) is continuous and the disk \(x^{2}+y^{2}\le1\) is compact, these are the global extrema.  
+Thus
+\[
+\text{global minimum: } f_{\min}=-4 \text{ at } (0,-1),
+\qquad
+\text{global maximum: } f_{\max}=\frac{16}{5} \text{ at } 
+\left(\pm\frac{2\sqrt6}{5},\frac15\right).
+\]
+
+\item 
+\item We look for extreme values of \(f(x,y,z)=x^{2}+2y^{2}+3z^{2}\) on the unit sphere
+\(g(x,y,z)=x^{2}+y^{2}+z^{2}=1\) using Lagrange multipliers.
+
+\[
+\nabla f=(2x,4y,6z),\qquad \nabla g=(2x,2y,2z).
+\]
+We solve
+\[
+\nabla f = \lambda \nabla g \quad\Longrightarrow\quad
+(2x,4y,6z)=\lambda(2x,2y,2z),
+\]
+so
+\[
+2x=2\lambda x,\quad 4y=2\lambda y,\quad 6z=2\lambda z.
+\]
+
+From these,
+\[
+x\neq0 \Rightarrow \lambda=1,\qquad
+y\neq0 \Rightarrow \lambda=2,\qquad
+z\neq0 \Rightarrow \lambda=3.
+\]
+
+\textbf{Case \(\lambda=1\):} then \(y=0\), \(z=0\).  
+Constraint gives \(x^{2}=1\), so \((\pm1,0,0)\), and
+\[
+f(\pm1,0,0)=1.
+\]
+
+\textbf{Case \(\lambda=2\):} then \(x=0\), \(z=0\).  
+Constraint gives \(y^{2}=1\), so \((0,\pm1,0)\), and
+\[
+f(0,\pm1,0)=2.
+\]
+
+\textbf{Case \(\lambda=3\):} then \(x=0\), \(y=0\).  
+Constraint gives \(z^{2}=1\), so \((0,0,\pm1)\), and
+\[
+f(0,0,\pm1)=3.
+\]
+
+Since the unit sphere is compact and \(f\) is continuous, the global extrema occur among these critical points.  
+The smallest value is \(1\) and the largest is \(3\). Hence
+\[
+f_{\min}=1 \text{ at } (\pm1,0,0),\qquad
+f_{\max}=3 \text{ at } (0,0,\pm1).
+\]
+(The points \((0,\pm1,0)\) give the intermediate value \(f=2\) and are not extreme.)
+
+\item Let the length, breadth, and width be \(x,y,z>0\) with volume constraint
+\(xyz=V\). We want to minimize \(S=x+y+z\). Using Lagrange multipliers with
+\(g(x,y,z)=xyz-V=0\):
+\[
+\nabla S = \lambda \nabla g
+\quad\Longrightarrow\quad
+(1,1,1)=\lambda (yz,xz,xy).
+\]
+Thus
+\[
+1=\lambda yz,\quad 1=\lambda xz,\quad 1=\lambda xy
+\]
+so
+\(\lambda yz=\lambda xz\Rightarrow z(y-x)=0\), and similarly all three variables must be equal:
+\[
+x=y=z.
+\]
+From \(xyz=V\) we get \(x=y=z=V^{1/3}\), hence
+\[
+S_{\min}=x+y+z=3V^{1/3}.
+\]
+This is indeed the minimum (it also follows from AM–GM:
+\(\frac{x+y+z}{3}\ge (xyz)^{1/3}=V^{1/3}\)).  
+
+There is no maximum possible value: keeping \(xyz=V\) fixed, we can take,
+for example, \(x\to\infty\), \(y\to\frac{V}{xz}\to 0\), \(z\) fixed, so that
+\(x+y+z\to\infty\). Thus the sum of the three dimensions is unbounded above.
+
+\end{enumerate}
+\end{document}

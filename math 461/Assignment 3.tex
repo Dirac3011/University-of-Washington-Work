@@ -1,0 +1,208 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 461 Homework \#3}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+
+\item
+There are 4 choices for size and 3 choices for crust.  
+For each of the 10 toppings, the customer may either include it or not, giving $2^{10}$ possible topping selections.
+
+\[
+4 \cdot 3 \cdot 2^{10} = 12 \cdot 1024 = 12288
+\]
+
+So, $12288$ different pizzas can be made.
+
+\item
+Label the sophomores $S_1,\dots,S_n$, the juniors $J_1,\dots,J_n$, and the seniors $R_1,\dots,R_n$.
+
+First, pair each sophomore with a junior.  
+This is equivalent to choosing a bijection from the set of sophomores to the set of juniors, which can be done in $n!$ ways.
+
+Now each sophomore--junior pair must be matched with exactly one senior.  
+Again, this is choosing a bijection between the $n$ existing pairs and the $n$ seniors, which can be done in $n!$ ways.
+
+Each final group consists of exactly one sophomore, one junior, and one senior, and the order of the groups does not matter because the construction produces unordered triples.
+
+Therefore, the total number of such divisions is
+\[
+n! \cdot n! = (n!)^2.
+\]
+
+
+\item
+(a) BANANAS has 7 letters: B(1), A(3), N(2), S(1).
+
+\[
+\frac{7!}{3!2!}=420
+\]
+
+(b) Total rearrangements of APPLES:
+
+\[
+\frac{6!}{2!}=360
+\]
+
+Subtract cases where first two letters are the same. Only P can repeat.
+
+Fix PP at the front; remaining letters A, L, E, S can be arranged in $4!$ ways.
+
+\[
+360-24=336
+\]
+
+\item
+$[7]=\{1,2,3,4,5,6,7\}$ and $[3]=\{1,2,3\}$.
+
+We want 5-element subsets of $[7]$ that do not contain all of $\{1,2,3\}$.
+
+Total 5-subsets of $[7]$:
+
+\[
+{7 \choose 5}=21
+\]
+
+Subsets containing $\{1,2,3\}$: choose 2 more from remaining $\{4,5,6,7\}$.
+
+\[
+{4 \choose 2}=6
+\]
+
+Therefore,
+
+\[
+21-6=15
+\]
+
+\item
+The choices for appetizers, main dishes, and desserts are independent.
+
+First choose 3 different appetizers from the 6 available:
+\[
+{6 \choose 3}.
+\]
+
+Next choose 3 different main dishes from the 5 available:
+\[
+{5 \choose 3}.
+\]
+
+Finally choose 2 different desserts from the 3 available:
+\[
+{3 \choose 2}.
+\]
+
+Since these choices are independent, we multiply:
+\[
+{6 \choose 3}{5 \choose 3}{3 \choose 2}
+= 20 \cdot 10 \cdot 3
+= 600.
+\]
+
+Thus, there are $600$ possible orders.
+
+
+\item
+Let $U=\{1,2,\dots,10\}$. The sum of all elements of $U$ is
+\[
+1+2+\cdots+10 = 55.
+\]
+
+Define a function $\phi$ from subsets of $U$ to subsets of $U$ by
+\[
+\phi(A)=U\setminus A.
+\]
+
+If a subset $A$ has sum $20$, then its complement has sum
+\[
+55-20=35.
+\]
+
+The function $\phi$ is a bijection because:
+\begin{itemize}
+\item every subset has a unique complement,
+\item taking the complement twice returns the original set.
+\end{itemize}
+
+Thus, $\phi$ gives a one-to-one correspondence between subsets with sum $20$ and subsets with sum $35$.
+
+Therefore,
+\[
+f(20)=f(35).
+\]
+
+
+\item
+Consider all subsets of $\{1,2,\dots,2n\}$.  
+There are $2^{2n}=4^n$ such subsets.
+
+The number ${2n \choose n}$ counts the subsets of size exactly $n$.
+
+Since not all subsets have size $n$, the number of $n$-element subsets must be strictly less than the total number of subsets. Therefore,
+\[
+{2n \choose n} < 2^{2n} = 4^n.
+\]
+
+This proves that for all $n \ge 1$,
+\[
+{2n \choose n} < 4^n.
+\]
+
+
+\item
+We count in two ways.
+
+Left side:  
+Choose $k$ people from $n$, then choose ordered president and vice-president from those $k$:
+
+\[
+\sum_{k=2}^n k(k-1){n \choose k}
+\]
+
+Right side:  
+Choose president and vice-president first: $n(n-1)$ ways.  
+From remaining $n-2$ people, choose any subset to join the committee:
+
+\[
+2^{n-2}
+\]
+
+Total:
+
+\[
+n(n-1)2^{n-2}
+\]
+
+Since both expressions count the same thing,
+
+\[
+\sum_{k=2}^n k(k-1){n \choose k}=n(n-1)2^{n-2}
+\]
+
+\end{enumerate}
+
+
+\end{document}
