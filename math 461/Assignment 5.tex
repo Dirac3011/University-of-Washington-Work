@@ -1,0 +1,87 @@
+\documentclass[12pt]{article}
+\usepackage{bigints}
+\usepackage{graphicx}			% Use this package to include images
+\usepackage{amsmath}	
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{polynom}
+\usepackage{listings}
+% A library of many standard math expressions
+\graphicspath{ {./Images/} }
+\usepackage[margin=1in]{geometry}% Sets 1in margins. 
+\newcommand{\qed}[0]{$\blacksquare$}
+\usepackage{fancyhdr}			% Creates headers and footers
+\usepackage{enumerate}          %These two package give custom labels to a list
+\usepackage[shortlabels]{enumitem}
+
+
+% Creates the header and footer. You can adjust the look and feel of these here.
+\pagestyle{fancy}
+\fancyhead[l]{Aditya Gupta}
+\fancyhead[c]{Math 461 Homework \#5}
+\fancyhead[r]{\today}
+\fancyfoot[c]{\thepage}
+\renewcommand{\headrulewidth}{0.2pt} %Creates a horizontal line underneath the header
+\setlength{\headheight}{15pt} %Sets enough space for the header
+\begin{document}
+\begin{enumerate}
+
+\item 
+\begin{enumerate}
+        \item This is true. For example of such a graph is the complete bipartite graph $K_{3,3}$ or the prism graph $Y_3$.
+        
+        Let the vertex set be $V = \{v_1, v_2, v_3, v_4, v_5, v_6\}$. We can connect them in a ring and then connect opposite vertices (diagonals):
+        
+        Edges: $\{v_1,v_2\}, \{v_2,v_3\}, \{v_3,v_4\}, \{v_4,v_5\}, \{v_5,v_6\}, \{v_6,v_1\}$ (forming a cycle $C_6$), and the diagonals $\{v_1,v_4\}, \{v_2,v_5\}, \{v_3,v_6\}$.
+        Each vertex is connected to 2 neighbors in the cycle and 1 across the center, giving each a degree of 3.
+        
+        
+
+        \item 
+        A graph where every vertex has degree 2 is a collection of one or more disjoint cycles. While it could be a single cycle ($C_n$), it doesn't have to be.
+        
+        For example, Consider a graph $G$ consisting of two disjoint triangles (two copies of $C_3$). 
+        Let $V = \{1, 2, 3, 4, 5, 6\}$ with edges $E = \{(1,2), (2,3), (3,1), (4,5), (5,6), (6,4)\}$. 
+        Every vertex has degree 2, but the graph is not a cycle because it is disconnected. It is the union of two cycles.
+        
+        
+    \end{enumerate}
+
+\item
+Let $n = 10$ and $|E| = 21$. By the Handshaking Lemma, the sum of the degrees is:
+$$\sum_{v \in V} \text{deg}(v) = 2|E| = 2(21) = 42$$
+The average degree is $\bar{d} = \frac{42}{10} = 4.2$.
+
+\begin{itemize}
+    \item At least degree 5: If every vertex had a degree less than 5 ($\text{deg}(v) \leq 4$), then the sum of degrees would be at most $10 \times 4 = 40$. Since the actual sum is 42, there must be at least one vertex $v$ such that $\text{deg}(v) \geq 5$.
+    \item At most degree 4: If every vertex had a degree greater than 4 ($\text{deg}(v) \geq 5$), then the sum of degrees would be at least $10 \times 5 = 50$. Since the actual sum is 42, there must be at least one vertex $u$ such that $\text{deg}(u) \leq 4$.
+\end{itemize}
+
+\item 
+
+     The total number of possible edges in a simple graph with 10 vertices is $\binom{10}{2} = \frac{10 \times 9}{2} = 45$. We are given a specific set of 4 edges: $S = \{e_1, e_2, e_3, e_4\}$.We must choose exactly 2 edges from $S$. The number of ways to do this is $\binom{4}{2} = 6$. For the remaining $45 - 4 = 41$ possible edges, each edge can either be present or absent. This gives $2^{41}$ variations for the other edges.
+    Therefore, the total number of such graphs is:
+    $$6 \times 2^{41}$$
+
+\item 
+
+\begin{enumerate}
+    \item False. The statement claims $G$ and $H$ are isomorphic if and only if every map $f$ is an isomorphism. This is incorrect. Isomorphism only requires that at least one such bijective map exists.
+    
+    \item False. A bijection between edge sets is not enough. For example, a graph with 3 edges forming a triangle ($C_3$) and a graph with 3 edges forming a star ($K_{1,3}$) both have 3 edges, but they are not isomorphic.
+    
+    
+    
+    \item False. Having the same degree sequence is a necessary condition for isomorphism, but not a sufficient one. For example, there are two non-isomorphic graphs with 6 vertices where every vertex has degree 3: the prism graph $Y_3$ and the complete bipartite graph $K_{3,3}$.
+    
+    \item True. If $G \cong H$, there exists an isomorphism $f: V(G) \to V(H)$. This map preserves adjacency, and therefore must preserve the degree of each vertex. Thus, $\text{deg}(u) = \text{deg}(f(u))$ for all $u$.
+    
+    \item True. An isomorphism between vertices $f: V(G) \to V(H)$ naturally induces a bijection between the edge sets $E(G)$ and $E(H)$ because $\{u,v\} \in E(G)$ if and only if $\{f(u), f(v)\} \in E(H)$.
+    
+    \item False. The statement omits the requirement that the map $f$ must be a bijection. Without the requirement that $f$ is one-to-one and onto, the condition could be satisfied by maps that collapse vertices or only cover a subgraph.
+\end{enumerate}
+
+\end{enumerate}
+
+
+\end{document}
